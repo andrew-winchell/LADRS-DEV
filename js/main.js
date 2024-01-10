@@ -1,7 +1,7 @@
 require([
     "esri/portal/Portal",
     "esri/identity/OAuthInfo",
-    "ersi/identity/IdentityManager",
+    "esri/identity/IdentityManager",
     "esri/portal/PortalQueryParams",
     "esri/Map",
     "esri/views/MapView",
