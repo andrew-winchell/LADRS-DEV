@@ -1522,6 +1522,7 @@ require([
         });
 
         function createTableRow (vertice) {
+            console.log(vertice);
             let multipoint = new Multipoint({
                 points: vertice,
                 spatialReference: mapView.spatialReference
