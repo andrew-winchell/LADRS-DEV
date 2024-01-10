@@ -1425,7 +1425,7 @@ require([
                 if (e.toolEventInfo.type == "vertex-add") {
                 
                     pointSeq += 10;
-                    
+
                     let coords = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0, pointSeq];
 
                     createTableRow([coords]);
@@ -1534,6 +1534,7 @@ require([
             let nextX = nextRow.insertCell(1);
             let nextY = nextRow.insertCell(2);
             let nextZ = nextRow.insertCell(3);
+            let nextSeq = nextRow.insertCell(4);
 
             nextVert.innerHTML = nextRow.rowIndex;
             nextX.innerHTML = mapPt.longitude.toFixed(6);
@@ -1542,6 +1543,7 @@ require([
             nextY.setAttribute("contentEditable", "true");
             nextZ.innerHTML = (mapPt.z * 3.281).toFixed(0);
             nextZ.setAttribute("contentEditable", "true");
+            nextSeq.innerHTML = vertice[3];
         }
 
         function drawPath (vertices) {
