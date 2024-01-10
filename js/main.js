@@ -13,10 +13,12 @@ require([
     "esri/widgets/Compass",
     "esri/widgets/Search",
     "esri/widgets/BasemapGallery",
-    "esri/widgets/Expand"
+    "esri/widgets/Expand",
+    "esri/widgets/ElevationProfile",
+    "esri/widgets/Sketch/SketchViewModel"
 ], (
     Portal, OAuthInfo, esriId, PortalQueryParams, Map, MapView, SceneView, Graphic, GraphicsLayer, FeatureLayer,
-    LayerList, Compass, Search, BasemapGallery, Expand
+    LayerList, Compass, Search, BasemapGallery, Expand, ElevationProfile, SketchViewModel
 ) => {
     //#region ArcGIS Online User Authentication
 
@@ -594,6 +596,153 @@ require([
     });
 
     mapView.ui.add(bgExpand, "bottom-left");
+
+    //#endregion
+
+    //#region Elevation Profile
+
+    const elevationProfile = new ElevationProfile({
+        view: mapView,
+        profiles: [
+            {
+                type: "ground"
+            },
+            {
+                type: "input",
+                title: "Flight Plan"
+            }
+        ], 
+        visibleElements: {
+            legend: false,
+            clearButton: false,
+            settingsButton: false,
+            sketchButton: false,
+            selectButton: false,
+            uniformChartScalingToggle: false
+        },
+        container: "elevation-profile",
+        unit: "nautical-miles"
+    });
+
+    elevationProfile.viewModel.effectiveUnits.elevation = "feet";
+
+    const elevationProfile3D = new ElevationProfile({
+        view: sceneView,
+        profiles: [
+            {
+                type: "ground"
+            },
+            {
+                type: "input",
+                title: "Flight Plan"
+            }
+        ],
+        visibleElements: {
+            legend: false,
+            clearButton: false,
+            settingsButton: false,
+            sketchButton: false,
+            selectButton: false,
+            uniformChartScalingToggle: false
+        },
+        container: "elevation-profile3d",
+        unit: "nautical-miles"
+    });
+
+    elevationProfile3D.viewModel.effectiveUnits.elevation = "feet";
+
+    //#endregion
+
+    //#region Global Variables
+    
+    let oid,
+    selectedFeature,
+    editor,
+    multipointVertices = [],
+    userLineColor;
+
+    //#endregion
+
+    //#region Create New Route
+
+    const pointSketchViewModel = new SketchViewModel({
+        layer: pointGraphicsLyr,
+        view: mapView,
+        pointSymbol: {
+            type: "simple-marker",
+            style: "circle",
+            color: "blue",
+            size: "8px"
+        },
+        snappingOptions: {
+            enabled: true,
+            featureSources: [
+                {
+                    layer: navLyr,
+                    enabled: true
+                },
+                {
+                    layer: fixLyr,
+                    enabled: true
+                },
+                {
+                    layer: aptLyr,
+                    enabled: true
+                },
+                {
+                    layer: vertiportsLyr,
+                    enabled: true
+                }
+            ]
+        },
+        labelOptions: { enabled: true },
+        tooltipOptions: { enabled: true }
+    });
+
+    // Open Creator Toolbar and Color Picker
+    $("#create-route").on("click", () => {
+        $("#route-toolbar").css("display", "block");
+        $("#add-route-vertices")[0].disabled = false;
+    });
+
+    $("#add-route-vertices").on("click", () => {
+        mapView.focus();
+        pointSketchViewModel.create("multipoint", { hasZ: true });
+        $("#add-route-vertices")[0].disabled = true;
+    });
+
+    pointSketchViewModel.on("create", (e) => {
+        if (e.state == "complete") {
+            console.log("complete feature");
+        } else if (e.state == "start") {
+            $("#waypoint-table tbody tr").remove();
+
+            let coords = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0];
+
+            //createTableRow([coords]);
+
+            multipointVertices.push(coords);
+
+            $("#waypoint-list").css("display", "block");
+        } else if (e.state == "active") {
+            if (e.toolEventInfo.type == "vertex-add") {
+                let coords = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0];
+
+                //createTableRow([coords]);
+
+                multipointVertices.push(coords);
+
+                //drawPath(multipointVertices);
+
+                if (multipointVertices.length > 1) {
+                    $("#complete-route")[0].disabled = false;
+                }
+
+                $("#cancel-vertices")[0].disabled = false;
+            }
+        }
+    })
+
 
     function createLayerList() {
         layerList = new LayerList({
