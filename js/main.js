@@ -1412,13 +1412,13 @@ require([
 
         // After add vertices is clicked, the sketch view model becomes active and starts creating a multipoint collection
         pointSketchViewModel.on("create", (e) => {
-            if (e.graphic) {
-                console.log(e.graphic);
-            }
             if (e.state == "complete") {
                 console.log("complete feature");
             } else if (e.state == "start") {
                 $("#waypoint-table tbody tr").remove();
+                if (e.graphic) {
+                    console.log(e.graphic);
+                }
 
                 pointSeq = 10;
 
@@ -1431,6 +1431,9 @@ require([
                 $("#waypoint-list").css("display", "block");
             } else if (e.state == "active") {
                 if (e.toolEventInfo.type == "vertex-add") {
+                    if (e.graphic) {
+                        console.log(e.graphic);
+                    }
                 
                     pointSeq += 10;
 
