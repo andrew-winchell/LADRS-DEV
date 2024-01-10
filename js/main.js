@@ -503,6 +503,11 @@ require([
             definitionExpression: "1=0"
         });
 
+        const uamLyr = new FeatureLayer({
+            url: "https://services3.arcgis.com/rKjecbIat1XHvd9J/arcgis/rest/services/UAM_Routes/FeatureServer",
+            title: "UAM Routes"
+        });
+
         //#endregion
 
         //#region Client Side Graphics
@@ -1407,6 +1412,9 @@ require([
 
         // After add vertices is clicked, the sketch view model becomes active and starts creating a multipoint collection
         pointSketchViewModel.on("create", (e) => {
+            if (e.graphic) {
+                console.log(e.graphic);
+            }
             if (e.state == "complete") {
                 console.log("complete feature");
             } else if (e.state == "start") {
@@ -1426,11 +1434,11 @@ require([
                 
                     pointSeq += 10;
 
-                    let coords = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0, pointSeq];
+                    let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0, pointSeq];
 
-                    createTableRow([coords]);
+                    createTableRow(point);
 
-                    multipointVertices.push(coords);
+                    multipointVertices.push(point);
 
                     drawPath(multipointVertices);
 
@@ -1521,8 +1529,9 @@ require([
             elevationProfile.input = graphic;
         });
 
-        function createTableRow (vertice) {
-            console.log(vertice, vertice[0][3]);
+        function createTableRow (point) {
+            let vertice = [point[0], point[1], point[2]];
+
             let multipoint = new Multipoint({
                 points: vertice,
                 spatialReference: mapView.spatialReference
@@ -1535,7 +1544,7 @@ require([
             let nextX = nextRow.insertCell(1);
             let nextY = nextRow.insertCell(2);
             let nextZ = nextRow.insertCell(3);
-            let nextSeq = nextRow.insertCell(4);
+            let nextFix = nextRow.insertCell(4);
 
             nextVert.innerHTML = nextRow.rowIndex;
             nextX.innerHTML = mapPt.longitude.toFixed(6);
@@ -1544,7 +1553,7 @@ require([
             nextY.setAttribute("contentEditable", "true");
             nextZ.innerHTML = (mapPt.z * 3.281).toFixed(0);
             nextZ.setAttribute("contentEditable", "true");
-            nextSeq.innerHTML = vertice[0][3];
+            nextFix.innerHTML = vertice[3];
         }
 
         function drawPath (vertices) {
