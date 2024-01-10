@@ -27,7 +27,8 @@ require([
         popup: false
     });
     esriId.registerOAuthInfos([info]);
-    esriId.getCredential(info.portalUrl + "/sharing")
+    esriId.getCredential(info.portalUrl + "/sharing");
+    esriId.checkSignInStatus(info.portalUrl + "/sharing")
         .then(() => {
             console.log("Sign In Successfull");
         }).catch(() => {
