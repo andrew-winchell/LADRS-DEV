@@ -9,13 +9,14 @@ require([
     "esri/Graphic",
     "esri/layers/GraphicsLayer",
     "esri/layers/FeatureLayer",
+    "esri/widgets/LayerList",
     "esri/widgets/Compass",
     "esri/widgets/Search",
     "esri/widgets/BasemapGallery",
     "esri/widgets/Expand"
 ], (
     Portal, OAuthInfo, esriId, PortalQueryParams, Map, MapView, SceneView, Graphic, GraphicsLayer, FeatureLayer,
-    Compass, Search, BasemapGallery, Expand
+    LayerList, Compass, Search, BasemapGallery, Expand
 ) => {
     //#region ArcGIS Online User Authentication
 
@@ -595,7 +596,7 @@ require([
     mapView.ui.add(bgExpand, "bottom-left");
 
     function createLayerList() {
-        layerList = new layerList({
+        layerList = new LayerList({
             view: mapView,
             container: "layer-list",
             listItemCreatedFunction: (event) => {
