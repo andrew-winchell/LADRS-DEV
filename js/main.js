@@ -61,7 +61,7 @@ require([
 
         //#region AGOL Hosted Feature Layers
 
-        const airportsLyr = new FeatureLayer ({
+        const airportsLyr = new FeatureLayer({
             url: "https://services6.arcgis.com/ssFJjBXIUyZDrSYZ/arcgis/rest/services/US_Airport/FeatureServer/0",
             title: "Airports",
             outFields: [
@@ -177,7 +177,7 @@ require([
             minScale: 2500000
         });
     
-        const classAirspaceLyr = new FeatureLayer ({
+        const classAirspaceLyr = new FeatureLayer({
             url: "https://services6.arcgis.com/ssFJjBXIUyZDrSYZ/arcgis/rest/services/Class_Airspace/FeatureServer/0",
             definitionExpression: "LOCAL_TYPE = 'CLASS_B' OR LOCAL_TYPE = 'CLASS_C' OR LOCAL_TYPE = 'CLASS_D'",
             outFields: [
@@ -219,7 +219,7 @@ require([
             visible: false
         });
     
-        const fixesLyr = new FeatureLayer ({
+        const fixesLyr = new FeatureLayer({
             url: "https://services3.arcgis.com/rKjecbIat1XHvd9J/arcgis/rest/services/FIX_BASE/FeatureServer/0",
             title: "Fixes",
             popupTemplate: {
@@ -326,7 +326,7 @@ require([
             minScale: 1500000
         });
     
-        const navaidsLyr = new FeatureLayer ({
+        const navaidsLyr = new FeatureLayer({
             url: "https://services6.arcgis.com/ssFJjBXIUyZDrSYZ/arcgis/rest/services/NAVAIDSystem/FeatureServer/0",
             title: "NAVAIDS",
             popupTemplate: {
@@ -365,7 +365,7 @@ require([
             minScale: 1500000
         });
     
-        const obstaclesLyr = new FeatureLayer ({
+        const obstaclesLyr = new FeatureLayer({
             url: "https://services6.arcgis.com/ssFJjBXIUyZDrSYZ/arcgis/rest/services/Digital_Obstacle_File/FeatureServer/0",
             title: "Obstacles",
             popupTemplate: {
@@ -423,7 +423,7 @@ require([
             visible: false 
         });
     
-        const vertiportsLyr = new FeatureLayer ({
+        const vertiportsLyr = new FeatureLayer({
             url: "https://services3.arcgis.com/rKjecbIat1XHvd9J/arcgis/rest/services/Vertiport/FeatureServer/0",
             title: "Vertiports",
             popupTemplate: {
@@ -454,7 +454,7 @@ require([
             definitionExpression: "Program = 'Archer'"
         });
     
-        const existingRoutesLyr = new FeatureLayer ({
+        const existingRoutesLyr = new FeatureLayer({
             url: "https://services3.arcgis.com/rKjecbIat1XHvd9J/arcgis/rest/services/LADRS_Routes/FeatureServer/0",
             title: "Existing Routes",
             renderer: {
@@ -507,17 +507,17 @@ require([
 
         //#region Client Side Graphics
 
-        const lineGraphicsLyr = new GraphicsLayer ({
+        const lineGraphicsLyr = new GraphicsLayer({
             title: "Proposed Path",
             graphics: []
         });
 
-        const pointGraphicsLyr = new GraphicsLayer ({
+        const pointGraphicsLyr = new GraphicsLayer({
             title: "Proposed Vertices",
             graphics: []
         });
 
-        const routeBuffer = new GraphicsLayer ({
+        const routeBuffer = new GraphicsLayer({
             title: "Route Protection - 0.6nm",
             graphics: []
         });
@@ -526,7 +526,7 @@ require([
 
         //#region Map View Configurations
 
-        const map = new Map ({
+        const map = new Map({
             basemap: "gray-vector",
             ground: "world-elevation",
             layers: [
@@ -541,7 +541,7 @@ require([
             ]
         });
 
-        const mapView = new MapView ({
+        const mapView = new MapView({
             map: map,
             container: "view-div",
             zoom: 3,
@@ -556,7 +556,7 @@ require([
             }
         });
 
-        const sceneView = new SceneView ({
+        const sceneView = new SceneView({
             map: map,
             container: "inset-div",
             popupEnabled: true,
@@ -966,22 +966,22 @@ require([
             });
         });
 
-        const compass = new Compass ({
+        const compass = new Compass({
             view: mapView
         });
 
         mapView.ui.add(compass, "top-left");
 
-        const search = new Search ({
+        const search = new Search({
             view: mapView,
             container: "search-div"
         });
 
-        const basemapGallery = new BasemapGallery ({
+        const basemapGallery = new BasemapGallery({
             view: mapView
         });
 
-        const bgExpand = new Expand ({
+        const bgExpand = new Expand({
             mapView,
             content: basemapGallery,
             expandIconClass: "esri-icon-basemap"
@@ -996,7 +996,7 @@ require([
         sceneView.ui.add(btn2d, { position: "bottom-left" });
 
         mapView.when(() => {
-            const sketch = new Sketch ({
+            const sketch = new Sketch({
                 layer: lineGraphicsLyr,
                 view: mapView,
                 creationMode: "update",
@@ -1030,7 +1030,7 @@ require([
     
         //#region Elevation Profile
 
-        const elevationProfile = new ElevationProfile ({
+        const elevationProfile = new ElevationProfile({
             view: mapView,
             profiles: [
                 {
@@ -1055,7 +1055,7 @@ require([
 
         elevationProfile.viewModel.effectiveUnits.elevation = "feet";
 
-        const elevationProfile3D = new ElevationProfile ({
+        const elevationProfile3D = new ElevationProfile({
             view: sceneView,
             profiles: [
                 {
@@ -1230,7 +1230,8 @@ require([
             selectedFeature,
             editor,
             multipointVertices = [],
-            userLineColor;
+            userLineColor,
+            pointSeq;
 
         //#endregion
 
@@ -1312,7 +1313,7 @@ require([
                     // Create a 0.6nm protection buffer around the selected route
                     const buffer = geometryEngine.buffer(geom, 0.3, "nautical-miles");
                     routeBuffer.add(
-                        new Graphic ({
+                        new Graphic({
                             geometry: buffer,
                             symbol: {
                                 type: "simple-fill",
@@ -1346,7 +1347,7 @@ require([
    
         //#region Create New Route
    
-        const pointSketchViewModel = new SketchViewModel ({
+        const pointSketchViewModel = new SketchViewModel({
             layer: pointGraphicsLyr,
             view: mapView,
             pointSymbol: {
@@ -1411,7 +1412,7 @@ require([
             } else if (e.state == "start") {
                 $("#waypoint-table tbody tr").remove();
 
-                let coords = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0];
+                let coords = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0, pointSeq];
 
                 createTableRow([coords]);
 
@@ -1420,7 +1421,7 @@ require([
                 $("#waypoint-list").css("display", "block");
             } else if (e.state == "active") {
                 if (e.toolEventInfo.type == "vertex-add") {
-                    let coords = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0];
+                    let coords = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0, pointSeq];
 
                     createTableRow([coords]);
 
@@ -1477,9 +1478,10 @@ require([
 
                 let long = cells[1].innerHTML,
                     lat = cells[2].innerHTML,
-                    alt = cells[3].innerHTML;
+                    alt = cells[3].innerHTML,
+                    pointSeq = cells[4].innerHTML;
 
-                let point = new Point ({
+                let point = new Point({
                     latitude: lat,
                     longitude: long,
                     z: alt/3.281,
@@ -1493,13 +1495,13 @@ require([
 
             multipointVertices = newVertices;
 
-            let polyline = new Polyline ({
+            let polyline = new Polyline({
                 hasZ: true,
                 spatialReference: mapView.spatialReference,
                 paths: multipointVertices
             });
 
-            const graphic = new Graphic ({
+            const graphic = new Graphic({
                 geometry: polyline,
                 symbol: {
                     type: "simple-line",
@@ -1515,7 +1517,7 @@ require([
         });
 
         function createTableRow (vertice) {
-            let multipoint = new Multipoint ({
+            let multipoint = new Multipoint({
                 points: vertice,
                 spatialReference: mapView.spatialReference
             });
@@ -1540,13 +1542,13 @@ require([
         function drawPath (vertices) {
             mapView.graphics.removeAll();
 
-            let polyline = new Polyline ({
+            let polyline = new Polyline({
                 hasZ: true,
                 spatialReference: mapView.spatialReference,
                 paths: vertices
             });
 
-            const graphic = new Graphic ({
+            const graphic = new Graphic({
                 geometry: polyline,
                 symbol: {
                     type: "simple-line",
@@ -1582,7 +1584,7 @@ require([
 
             let path = [];
 
-            let multipoint = new Multipoint ({
+            let multipoint = new Multipoint({
                 points: multipointVertices,
                 spatialReference: mapView.spatialReference
             });
@@ -1598,7 +1600,7 @@ require([
                 paths: path
             };
 
-            let polylineGraphic = new Graphic ({
+            let polylineGraphic = new Graphic({
                 geometry: polyline,
                 attributes: {
                     "route_name": rName,
@@ -1783,7 +1785,7 @@ require([
             $("#waypoint-table tbody tr").remove();
 
             for (let v of vertices[0]) {
-                let point = new Point ({
+                let point = new Point({
                     hasZ: true,
                     x: v[0],
                     y: v[1],
@@ -1808,13 +1810,13 @@ require([
         }
 
         function selectedFeatureProfile (vertices) {
-            let polyline = new Polyline ({
+            let polyline = new Polyline({
                 hasZ: true,
                 spatialReference: mapView.spatialReference,
                 paths: vertices
             });
 
-            const graphic = new Graphic ({
+            const graphic = new Graphic({
                 geometry: polyline,
                 symbol: {
                     type: "simple-line",
@@ -1846,7 +1848,7 @@ require([
         );
 
         mapView.when(() => {
-            editor = new Editor ({
+            editor = new Editor({
                 view: mapView,
                 visibleElements: {
                     snappingControls: false,
@@ -1945,7 +1947,7 @@ require([
                     lat = cells[2].innerHTML,
                     alt = cells[3].innerHTML;
                 
-                let point = new Point ({
+                let point = new Point({
                     latitude: lat,
                     longitude: long,
                     z: alt/3.281,
@@ -1963,7 +1965,7 @@ require([
                 hasZ: true
             };
     
-            let polylineGraphic = new Graphic ({
+            let polylineGraphic = new Graphic({
                 geometry: polyline,
                 attributes: {
                     "OBJECTID": oid
@@ -2063,7 +2065,7 @@ require([
         );
 
         sceneView.when(() => {
-            editor = new Editor ({
+            editor = new Editor({
                 view: sceneView,
                 visibleElements: {
                     snappingControls: false,
