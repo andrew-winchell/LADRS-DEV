@@ -1,0 +1,136 @@
+html, body, #view-div, #inset-div {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#inset-div {
+  display: none;
+}
+
+#header-title {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+#logo {
+  vertical-align: middle;
+  width: 200px;
+  margin: 5px;
+}
+
+#header-title h2 {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#menu { 
+  float: left;
+  margin-top: 13.92px;
+}
+
+#toolbar {
+  height: 100%;
+  position: absolute;
+}
+
+#route-toolbar {
+  display: none;
+  position: absolute;
+  left: calc(50% - 120px);
+  top: 15px;
+}
+
+#color-picker-panel {
+  display: none;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+
+#waypoint-list {
+  display: none;
+  border: 1px solid black;
+}
+
+#search-div {
+  float: left;
+  margin: 21.92px;
+}
+
+#btn2d, #btn3d {
+  border: none;
+}
+
+#pointer-coords {
+  text-align: right;
+  margin-right: 5px;
+  font-size: 9pt;
+}
+
+#layer-list2d {
+  padding: 0px !important;
+}
+
+#layer-list3d {
+  padding: 0px !important;
+  display: none;
+}
+
+.esri-layer-list__item-container {
+  padding: 12px 5px 12px 5px !important;
+}
+
+.esri-expand__content {
+  overflow-y: scroll !important;
+}
+
+.list-container {
+  max-height: 200px !important;
+}
+
+#filter-container {
+  background-color: white;
+  padding: 1rem;
+  width: max-content;
+}
+
+.filter-field-dropdown {
+  margin-bottom: 5px;
+}
+
+.filter-switch {
+  margin-right:0px;
+  margin-left:auto;
+  padding-top:12px;
+}
+
+.condition-selector {
+  margin-bottom: 10px;
+}
+
+#elevation-profile {
+  height: -webkit-fill-available;
+  width: -webkit-fill-available;
+}
+
+#elevation-profile3d {
+  height: -webkit-fill-available;
+  width: -webkit-fill-available;
+  display: none;
+}
+
+#waypoint-table td {
+  text-align: center;
+  border: 1px solid black;
+}
+
+#save-vertices {
+  display: none;
+  padding: 10px;
+}
+
+.esri-elevation-profile__header {
+  display: none;
+}

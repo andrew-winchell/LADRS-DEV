@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!-- 
+    This HTML file is to be used for Archer Aviation ONLY.
+-->
+
+<html lang="en">
+
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Low Altitude Drone Routing System (LADRS)</title>
+
+        <!--Custom CSS File-->
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+
+        <!--ESRI Calcite Design CSS CDN-->
+        <script type="module" src="https://js.arcgis.com/calcite-components/1.9.0/calcite.esm.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.9.0/calcite.css" />
+        <link id="arcgis-maps-sdk-theme-dark" rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/dark/main.css" />
+        <link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/dark/main.css" />
+
+        <!--[if IE<9]
+            <link rel="stylesheet" href="css.style.css">
+        <![endIf]-->
+    </head>
+
+    <body class="calcite-mode-dark">
+
+        <!--The base component for the entire application-->
+        <calcite-shell>
+            <div id="header-title" slot="header">
+                <!--<img src="media/flightsync.png" alt="Flight Sync" id="logo">-->
+                <!--Application Header Title-->
+                <h2>Low Altitude Drone Routing System (LADRS)</h2>
+                <div style="position: absolute; right: 10px; top: 0px;">
+                    <div id="search-div"></div>
+                    <calcite-dropdown id="menu">
+                        <calcite-button slot="trigger" icon-start="hamburger" appearance="transparent" kind="neutral" scale="1"></calcite-button>
+                        <calcite-dropdown-group>
+                            <calcite-dropdown-item icon-start="web" href="https://www.archer.com/" target="_blank">Archer Official Website</calcite-dropdown-item>
+                        </calcite-dropdown-group>
+                    </calcite-dropdown>
+                </div>
+            </div>
+
+            <!--Left Side Panel-->
+            <calcite-shell-panel slot="panel-start" id="panel-start" width-scale="m">
+                <calcite-panel>
+                    <!--Map Contents Group-->
+                    <calcite-block collapsible heading="Map Contents" id="map-contents">
+                        <calcite-icon slot="icon" scale="s" icon="map-contents"></calcite-icon>
+                        <div id="layer-list"></div>
+                    </calcite-block>
+
+                    <!--Create New and Existing Routes Group-->
+                    <calcite-block collapsible heading="Routes" id="routes-container">
+                        <calcite-icon slot="icon" scale="s" icon="conditional-rules-path"></calcite-icon>
+                        <calcite-action text="Create Route" icon="line" text-enabled alignment="center" appearance="transparent" scale="m" id="create-route"></calcite-action>
+
+                        <div id="existing-routes-list">
+                            <calcite-list id="existing-routes" filter-enabled loading selection-mode="multiple" selection-appearance="icon">
+                                <!--Auto Generated in main.js-->
+                            </calcite-list>
+                        </div>
+                    </calcite-block>
+                </calcite-panel>
+            </calcite-shell-panel>
+
+            <!--Main Map Area-->
+            <calcite-panel id="map-area">
+                <!--Map-->
+                <div id="view-div"></div>
+                
+                <!--Popup Color Picker Modal-->
+                <div id="color-picker-panel">
+                    <calcite-color-picker id="color-picker"></calcite-color-picker>
+                    <calcite-button id="confirm-color">Confirm Color</calcite-button>
+                </div>
+
+                <!--Route Creation Toolbar-->
+                <calcite-action-pad expand-disabled layout="horizontal" id="route-toolbar">
+                    <calcite-action text="Add" icon="plus" id="add-route-vertices" disabled></calcite-action>
+                    <calcite-action text="Cancel" icon="circle-disallowed" id="cancel-vertices" disabled></calcite-action>
+                    <calcite-action text="Edit" icon="vertex-edit" id="edit-vertices" disabled></calcite-action>
+                    <calcite-action text="Complete" icon="line-check" id="complete-route" disabled></calcite-action>
+                    <calcite-action text="Save" icon="save" id="save" disabled></calcite-action>
+                </calcite-action-pad>
+
+                <!--Toolbar for 2D/3D Conversion Buttons-->
+                <div id="infoDiv">
+                    <input
+                        class="esri-component esri-widget--button esri-widget esri-interactive"
+                        type="button"
+                        id="btn3d"
+                        value="3D"
+                    />
+                    <input
+                        class="esri-component esri-widget--button esri-widget esri-interactive"
+                        type="button"
+                        id="btn2d"
+                        value="2D"
+                    />
+                </div>
+
+                <!--Not In Use-->
+                <!--Holds the Inset Version of 2D/3D View-->
+                <div id="inset-div"></div>
+
+                <!--Popup Modal for Route Attributes and Save-->
+                <calcite-modal aria-labelledby="modal-title" id="route-save-modal" outside-close-disabled close-button-disabled scale="s" width="s">
+                    <div slot="header" id="modal-title">
+                        Save As New Route
+                    </div>
+                    <div slot="content">
+                        <calcite-label>
+                            Route Name
+                            <calcite-input placeholder="Example: 'ORD to Chicago Downtown'" id="route-name"></calcite-input>
+                        </calcite-label>
+                        <calcite-label>
+                            Departing Facility
+                            <calcite-input id="route-dep"></calcite-input>
+                        </calcite-label>
+                        <calcite-label>
+                            Arriving Facility
+                            <calcite-input id="route-arr"></calcite-input>
+                        </calcite-label>
+                    </div>
+                    <calcite-button slot="primary" width="full" id="route-save">
+                        Save Route
+                    </calcite-button>
+                </calcite-modal>
+
+                <!--Container for X/Y/Z Coordinates Based on Pointer Location-->
+                <div id="pointer-coords"></div>
+
+                <!--Container for 2D Elevation Profile-->
+                <div id="elevation-profile" slot="footer"></div>
+
+                <!--Container for 3D Elevation Profile-->
+                <div id="elevation-profile3d" slot="footer"></div>
+
+            </calcite-panel>
+
+            <!--Right Side Panel-->
+            <calcite-shell-panel slot="panel-end" id="panel-end" width-scale="m">
+                <calcite-panel>
+                    <calcite-block heading="Select route on map"></calcite-block>
+                    <div id="features-widget" class="calcite-match-height"></div>
+                    <div id="waypoint-list">
+                        <!--Table for Selected Route Vertices-->
+                        <table id="waypoint-table" style="width: 100%;">
+                            <colgroup>
+                                <col span="1" style="width: 15%;">
+                                <col span="1" style="width: 30%;">
+                                <col span="1" style="width: 27.5%;">
+                                <col span="1" style="width: 27.5%;">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>Vertice</th>
+                                    <th>X</th>
+                                    <th>Y</th>
+                                    <th>Z</th>
+                                </tr>
+                            </thead>
+
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <calcite-button id="save-vertices">Save Vertices</calcite-button>
+                </calcite-panel>
+            </calcite-shell-panel>
+
+        </calcite-shell>
+
+        <script src="lib/jquery-3.6.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <script src="https://js.arcgis.com/4.28/"></script>
+        <script type="module" src="js/main.js"></script>
+    </body>
+
+</html>
