@@ -1522,7 +1522,7 @@ require([
         });
 
         function createTableRow (vertice) {
-            console.log(vertice, vertice[3]);
+            console.log(vertice, vertice[0][3]);
             let multipoint = new Multipoint({
                 points: vertice,
                 spatialReference: mapView.spatialReference
@@ -1544,7 +1544,7 @@ require([
             nextY.setAttribute("contentEditable", "true");
             nextZ.innerHTML = (mapPt.z * 3.281).toFixed(0);
             nextZ.setAttribute("contentEditable", "true");
-            nextSeq.innerHTML = vertice[3];
+            nextSeq.innerHTML = vertice[0][3];
         }
 
         function drawPath (vertices) {
