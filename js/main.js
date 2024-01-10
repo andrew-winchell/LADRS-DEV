@@ -1412,6 +1412,8 @@ require([
             } else if (e.state == "start") {
                 $("#waypoint-table tbody tr").remove();
 
+                pointSeq = 10;
+
                 let coords = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0, pointSeq];
 
                 createTableRow([coords]);
@@ -1421,6 +1423,9 @@ require([
                 $("#waypoint-list").css("display", "block");
             } else if (e.state == "active") {
                 if (e.toolEventInfo.type == "vertex-add") {
+                
+                    pointSeq += 10;
+                    
                     let coords = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0, pointSeq];
 
                     createTableRow([coords]);
