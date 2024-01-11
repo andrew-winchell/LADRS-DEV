@@ -1416,9 +1416,17 @@ require([
             } else if (e.state == "start") {
                 $("#waypoint-table tbody tr").remove();
                 console.log(e)
+                
+                let graphic = new Point({
+                    x: e.toolEventInfo.vertices[0].coordinates[0],
+                    y: e.toolEventInfo.vertices[0].coordinates[1],
+                    spatialReference: mapView.spatialReference
+                });
+
+                console.log(graphic)
 
                 let query = {
-                    geometry: e.toolEventInfo.added[0],
+                    geometry: graphic.geometry,
                     spatialRelationship: "intersects",
                     outFields: ["*"],
                     returnGeometry: false
