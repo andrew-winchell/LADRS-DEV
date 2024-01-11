@@ -126,7 +126,7 @@ require([
             $("#airport-filter-value").empty();
                 let field = change.target.value;
                 uniqueValues({
-                    layer: airportsLyr,
+                    layer: layers.airportsLyr,
                     field: field
                 }).then((response) => {
                     let unique = [];
@@ -156,7 +156,7 @@ require([
                 valueList.push(value)
             }
             if (airportSwitch.checked == true) {
-                mapView.whenLayerView(airportsLyr).then((layerView) => {
+                mapView.whenLayerView(layers.airportsLyr).then((layerView) => {
                     layerView.filter = {
                         where: field + " IN (" + valueList + ")"
                     }
@@ -168,13 +168,13 @@ require([
             let field = $("#airport-field-select")[0].value;
             let value = $("#airport-filter-value")[0].value;
             if (toggle.target.checked == true) {
-                mapView.whenLayerView(airportsLyr).then((layerView) => {
+                mapView.whenLayerView(layers.airportsLyr).then((layerView) => {
                     layerView.filter = {
                         where: field + " = '" + value + "'"
                     }
                 });
             } else if (toggle.target.checked == false) {
-                mapView.whenLayerView(airportsLyr).then((layerView) => {
+                mapView.whenLayerView(layers.airportsLyr).then((layerView) => {
                     layerView.filter = {
                         where: "1=1"
                     }
@@ -326,7 +326,7 @@ require([
             $("#navaids-filter-value").empty();
             let field = change.target.value;
             uniqueValues({
-                layer: navaidsLyr,
+                layer: layers.navaidsLyr,
                 field: field
             }).then((response) => {
                 let unique = [];
@@ -356,7 +356,7 @@ require([
                 valueList.push(value);
             }
             if (navaidsSwitch.checked == true) {
-                mapView.whenLayerView(navaidsLyr).then((layerView) => {
+                mapView.whenLayerView(layers.navaidsLyr).then((layerView) => {
                     layerView.filter = {
                         where: field + " IN (" + valueList + ")"
                     }
@@ -377,13 +377,13 @@ require([
                 valueList.push(value);
             }
             if (toggle.target.checked == true) {
-                mapView.whenLayerView(navaidsLyr).then((layerView) => {
+                mapView.whenLayerView(layers.navaidsLyr).then((layerView) => {
                     layerView.filter = {
                         where: field + " IN (" + valueList + ")"
                     }
                 });
             } else if (toggle.target.checked == false) {
-                mapView.whenLayerView(navaidsLyr).then((layerView) => {
+                mapView.whenLayerView(layers.navaidsLyr).then((layerView) => {
                     layerView.filter = {
                         where: "1=1"
                     }
@@ -838,7 +838,7 @@ require([
                     routeBuffer.remove(removeGraphic);
                 }
             });
-        }
+        }fixesLyr
 
         //#endregion
    
@@ -925,7 +925,7 @@ require([
                     returnGeometry: false
                 };
 
-                fixesLyr.queryFeatures(query)
+                layers.fixesLyr.queryFeatures(query)
                     .then((results) => {
                         let fix_id = "";
                         if (results.features.length > 0) {
@@ -959,7 +959,7 @@ require([
                         returnGeometry: false
                     };
 
-                    fixesLyr.queryFeatures(query)
+                    layers.fixesLyr.queryFeatures(query)
                         .then((results) => {
                             let fix_id = "";
                             if (results.features.length > 0) {
@@ -1623,19 +1623,19 @@ require([
                     selfEnabled: false,
                     featureSources: [
                         {
-                            layer: navaidsLyr,
+                            layer: layers.navaidsLyr,
                             enabled: true
                         },
                         {
-                            layer: fixesLyr,
+                            layer: layers.fixesLyr,
                             enabled: true
                         },
                         {
-                            layer: airportsLyr,
+                            layer: layers.airportsLyr,
                             enabled: true
                         },
                         {
-                            layer: vertiportsLyr,
+                            layer: layers.vertiportsLyr,
                             enabled: true
                         }
                     ]
