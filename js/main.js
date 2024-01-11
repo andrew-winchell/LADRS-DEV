@@ -838,7 +838,7 @@ require([
                     routeBuffer.remove(removeGraphic);
                 }
             });
-        }fixesLyr
+        }
 
         //#endregion
    
