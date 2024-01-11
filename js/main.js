@@ -1410,15 +1410,15 @@ require([
         });
 
         // After add vertices is clicked, the sketch view model becomes active and starts creating a multipoint collection
-        pointSketchViewModel.on("create", (e) => {
+        pointSketchViewModel.on("update", (e) => {
             if (e.state == "complete") {
                 console.log("complete feature");
             } else if (e.state == "start") {
                 $("#waypoint-table tbody tr").remove();
 
-                let coords = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0];
+                let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0, ""];
 
-                createTableRow([coords]);
+                createTableRow(point);
 
                 multipointVertices.push(coords);
 
@@ -1519,7 +1519,8 @@ require([
             elevationProfile.input = graphic;
         });
 
-        function createTableRow (vertice) {
+        function createTableRow (point) {
+            let vertice = [point[0], point[1], point[2]];
             let multipoint = new Multipoint({
                 points: vertice,
                 spatialReference: mapView.spatialReference
@@ -1532,6 +1533,7 @@ require([
             let nextX = nextRow.insertCell(1);
             let nextY = nextRow.insertCell(2);
             let nextZ = nextRow.insertCell(3);
+            let nextFix = nextRow.insertCell(4);
 
             nextVert.innerHTML = nextRow.rowIndex;
             nextX.innerHTML = mapPt.longitude.toFixed(6);
