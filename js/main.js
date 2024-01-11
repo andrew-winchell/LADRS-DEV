@@ -1423,13 +1423,15 @@ require([
                     returnGeometry: false
                 };
 
-                console.log(fixesLyr.queryFeatures(query))
+                fixesLyr.queryFeatures(query)
+                    .then((results) => {
+                        console.log(results);
+                        let coords = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0];
 
-                let coords = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0];
-
-                createTableRow([coords]);
-
-                multipointVertices.push(coords);
+                        createTableRow([coords]);
+        
+                        multipointVertices.push(coords);
+                    })
 
                 $("#waypoint-list").css("display", "block");
             } else if (e.state == "active") {
