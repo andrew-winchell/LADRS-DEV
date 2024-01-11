@@ -1,7 +1,5 @@
 require([
     "js/modules/userAuthentication.js",
-    "esri/portal/Portal",
-    "esri/portal/PortalQueryParams",
     "esri/views/SceneView",
     "esri/WebScene",
     "esri/Map",
@@ -32,33 +30,13 @@ require([
     "esri/rest/support/BufferParameters",
     "esri/rest/geometryService"
 ], (
-        userAuthentication, Portal, PortalQueryParams, SceneView, WebScene, Map, MapView, Graphic, GraphicsLayer,
+        userAuthentication, SceneView, WebScene, Map, MapView, Graphic, GraphicsLayer,
         FeatureLayer, uniqueValues, ElevationLayer, Draw, LayerList, Sketch, SketchViewModel, Search,
         BasemapGallery, Expand, Editor, webMercatorUtils, Compass, Multipoint, Polyline, Point,
         geometryEngine, ElevationProfile, reactiveUtils, geodesicUtils, Basemap, BufferParameters, geometryService
     ) => {
 
-        //#region ArcGIS Online User Authentication
-
         userAuthentication.authenticateUser();
-        /*const info = new OAuthInfo({
-            appId: "ewP4KhzNqP19llp8",
-            portalUrl: "https://cobecconsulting.maps.arcgis.com",
-            authNamespace: "portal_oauth_inline",
-            flowType: "auto",
-            popup: false
-        });
-        esriId.registerOAuthInfos([info]);
-        esriId.getCredential(info.portalUrl + "/sharing");
-        esriId.checkSignInStatus(info.portalUrl + "/sharing")
-            .then(() => {
-                console.log("Sign In Successful.");
-            }).catch(() => {
-                console.log("User not signed in.")
-            });
-        */
-
-        //#endregion
 
         //#region AGOL Hosted Feature Layers
 
