@@ -1415,7 +1415,6 @@ require([
                 console.log("complete feature");
             } else if (e.state == "start") {
                 $("#waypoint-table tbody tr").remove();
-                console.log(e)
                 
                 let graphic = new Point({
                     x: e.toolEventInfo.vertices[0].coordinates[0],
@@ -1423,15 +1422,13 @@ require([
                     spatialReference: mapView.spatialReference
                 });
 
-                console.log(graphic)
-
                 let query = {
                     geometry: graphic,
                     distance: 1,
                     units: "feet",
                     spatialRelationship: "intersects",
                     outFields: ["*"],
-                    returnGeometry: true
+                    returnGeometry: false
                 };
 
                 fixesLyr.queryFeatures(query)
@@ -1449,22 +1446,37 @@ require([
             } else if (e.state == "active") {
                 if (e.toolEventInfo.type == "vertex-add") {
 
+                    let graphic = new Point({
+                        x: e.toolEventInfo.vertices[0].coordinates[0],
+                        y: e.toolEventInfo.vertices[0].coordinates[1],
+                        spatialReference: mapView.spatialReference
+                    });
+
                     let query = {
-                        geometry: e.graphic.geometry,
+                        geometry: graphic,
+                        distance: 1,
+                        unit: "feet",
                         spatialRelationship: "intersects",
                         outFields: ["*"],
                         returnGeometry: false
                     };
-                    
-                    console.log(fixesLyr.queryFeatures(query))
 
-                    let coords = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0];
+                    fixesLyr.queryFeatures(query)
+                        .then((results) => {
+                            let fix_id = "";
+                            if (results.features) {
+                                fix_id = results.features[0].attributes.FIX_ID;
+                            }
+                            let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0, fix_id];
+                            
+                            createTableRow(point);
+                            
+                            //multipointVertices.push(coords);
+                        })
 
-                    createTableRow([coords]);
 
-                    multipointVertices.push(coords);
 
-                    drawPath(multipointVertices);
+                    //drawPath(multipointVertices);
 
                     if (multipointVertices.length > 1) {
                         $("#complete-route")[0].disabled = false;
