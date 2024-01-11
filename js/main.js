@@ -1347,19 +1347,19 @@ require([
                 enabled: true,
                 featureSources: [
                     {
-                        layer: navaidsLyr,
+                        layer: layers.navaidsLyr,
                         enabled: true
                     },
                     {
-                        layer: fixesLyr,
+                        layer: layers.fixesLyr,
                         enabled: true
                     },
                     {
-                        layer: airportsLyr,
+                        layer: layers.airportsLyr,
                         enabled: true
                     },
                     {
-                        layer: vertiportsLyr,
+                        layer: layers.vertiportsLyr,
                         enabled: true
                     }
                 ]
