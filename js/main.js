@@ -591,7 +591,7 @@ require([
                     mapView.on("pointer-move", (move) => {
                         let mapPt = mapView.toMap(move);
                         let coordinates = sampler.queryElevation(mapPt)
-                        $("#pointer-coords").html("Lat: " + coordinates.latitude + "  Long: " + coordinates.longitude + "  Elev: " + (coordinates.z) + " ft");
+                        $("#pointer-coords").html("Lat: " + coordinates.latitude + "  Long: " + coordinates.longitude + "  Elev: " + (coordinates.z) + " m");
                         pointerElevation = coordinates.z
                     });
                 });
