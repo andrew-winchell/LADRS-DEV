@@ -39,6 +39,41 @@ require([
         const layers = layersModule.layers;
         const graphicsLayers = layersModule.graphicsLayers;
 
+        const mapView = new MapView({
+            map: map,
+            container: "view-div",
+            zoom: 3,
+            center: [-97, 39],
+            popupEnabled: true,
+            popup: { // popup options when any feature layer is clicked on the map
+                dockEnabled: true,
+                dockOptions: {
+                    position: "bottom-right",
+                    breakpoint: false
+                }
+            }
+        });
+
+        const sceneView = new SceneView({
+            map: map,
+            container: "inset-div",
+            popupEnabled: true,
+            popup: { // popup options when any feature layer is clicked on the map
+                dockEnabled: true,
+                dockOptions: {
+                    position: "bottom-right",
+                    breakpoint: false
+                }
+            }
+        });
+
+        const appConfig = {
+            mapView: mapView,
+            sceneView: sceneView,
+            activeView: mapView,
+            container: "view-div"
+        };
+
         //#region Layer Filters
 
         let routeSelection = document.createElement("calcite-combobox");
