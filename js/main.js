@@ -1441,7 +1441,9 @@ require([
 
                         createTableRow(point);
         
-                        multipointVertices.push(point);
+                        multipointVertices.push([point[0], point[1], point[2]]);
+
+                        drawPath(multipointVertices);
                     });
 
                 $("#waypoint-list").css("display", "block");
@@ -1473,7 +1475,7 @@ require([
                             
                             createTableRow(point);
                             
-                            multipointVertices.push(point);
+                            multipointVertices.push([point[0], point[1], point[2]]);
 
                             drawPath(multipointVertices);
                         });
