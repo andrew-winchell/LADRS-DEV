@@ -1442,7 +1442,7 @@ require([
                         createTableRow(point);
         
                         multipointVertices.push(point);
-                    })
+                    });
 
                 $("#waypoint-list").css("display", "block");
             } else if (e.state == "active") {
@@ -1474,11 +1474,9 @@ require([
                             createTableRow(point);
                             
                             multipointVertices.push(point);
-                        })
 
-
-
-                    drawPath(multipointVertices);
+                            drawPath(multipointVertices);
+                        });
 
                     if (multipointVertices.length > 1) {
                         $("#complete-route")[0].disabled = false;
