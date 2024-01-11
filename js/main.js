@@ -1416,8 +1416,9 @@ require([
             } else if (e.state == "start") {
                 $("#waypoint-table tbody tr").remove();
 
+                let snappedGeometry = geometryEngine.project(e.graphic.geometry, { wkid: 4326 });
                 let query = {
-                    geometry: e.graphic.geometry,
+                    geometry: snappedGeometry,
                     spatialRelationship: "intersects",
                     outFields: ["*"],
                     returnGeometry: false
