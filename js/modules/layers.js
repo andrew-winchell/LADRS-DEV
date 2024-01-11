@@ -1,6 +1,6 @@
 define([
     "esri/layers/FeatureLayer",
-    "ersi/layers/GraphicsLayer",
+    "esri/layers/GraphicsLayer",
     "esri/Map"
 ], (FeatureLayer, GraphicsLayer, Map) => {
 
