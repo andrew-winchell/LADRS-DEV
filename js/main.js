@@ -1431,7 +1431,7 @@ require([
                     units: "feet",
                     spatialRelationship: "intersects",
                     outFields: ["*"],
-                    returnGeometry: false
+                    returnGeometry: true
                 };
 
                 fixesLyr.queryFeatures(query)
