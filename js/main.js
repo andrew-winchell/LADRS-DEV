@@ -1416,7 +1416,7 @@ require([
             } else if (e.state == "start") {
                 $("#waypoint-table tbody tr").remove();
 
-                console.log(e)
+                console.log(elevation);
                 
                 let graphic = new Point({
                     x: e.toolEventInfo.vertices[0].coordinates[0],
