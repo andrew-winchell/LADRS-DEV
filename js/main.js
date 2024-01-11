@@ -36,8 +36,19 @@ require([
         userAuthentication.authenticateUser();
 
         const map = layersModule.map;
-        const layers = layersModule.layers;
-        const graphicsLayers = layersModule.graphicsLayers;
+
+        const fixesLyr = layersModule.layers.fixesLyr;
+        const navaidsLyr = layersModule.layers.navaidsLyr;
+        const existingRoutesLyr = layersModule.layers.existingRoutesLyr;
+        const airportsLyr = layersModule.layers.airportsLyr;
+        const classAirspaceLyr = layersModule.layers.classAirspaceLyr;
+        const obstaclesLyr = layersModule.layers.obstaclesLyr;
+        const vertiportsLyr = layersModule.layers.vertiportsLyr;
+        const uamLyr = layersModule.layers.uamLyr;
+
+        const lineGraphicsLyr = layersModule.graphicsLayers.lineGraphicsLyr;
+        const pointGraphicsLyr = layersModule.graphicsLayers.pointGraphicsLyr;
+        const routeBuffer = layersModule.graphicsLayers.routeBuffer;
 
         const mapView = new MapView({
             map: map,
@@ -126,7 +137,7 @@ require([
             $("#airport-filter-value").empty();
                 let field = change.target.value;
                 uniqueValues({
-                    layer: layers.airportsLyr,
+                    layer: airportsLyr,
                     field: field
                 }).then((response) => {
                     let unique = [];
@@ -156,7 +167,7 @@ require([
                 valueList.push(value)
             }
             if (airportSwitch.checked == true) {
-                mapView.whenLayerView(layers.airportsLyr).then((layerView) => {
+                mapView.whenLayerView(airportsLyr).then((layerView) => {
                     layerView.filter = {
                         where: field + " IN (" + valueList + ")"
                     }
@@ -168,13 +179,13 @@ require([
             let field = $("#airport-field-select")[0].value;
             let value = $("#airport-filter-value")[0].value;
             if (toggle.target.checked == true) {
-                mapView.whenLayerView(layers.airportsLyr).then((layerView) => {
+                mapView.whenLayerView(airportsLyr).then((layerView) => {
                     layerView.filter = {
                         where: field + " = '" + value + "'"
                     }
                 });
             } else if (toggle.target.checked == false) {
-                mapView.whenLayerView(layers.airportsLyr).then((layerView) => {
+                mapView.whenLayerView(airportsLyr).then((layerView) => {
                     layerView.filter = {
                         where: "1=1"
                     }
@@ -326,7 +337,7 @@ require([
             $("#navaids-filter-value").empty();
             let field = change.target.value;
             uniqueValues({
-                layer: layers.navaidsLyr,
+                layer: navaidsLyr,
                 field: field
             }).then((response) => {
                 let unique = [];
@@ -356,7 +367,7 @@ require([
                 valueList.push(value);
             }
             if (navaidsSwitch.checked == true) {
-                mapView.whenLayerView(layers.navaidsLyr).then((layerView) => {
+                mapView.whenLayerView(navaidsLyr).then((layerView) => {
                     layerView.filter = {
                         where: field + " IN (" + valueList + ")"
                     }
@@ -377,13 +388,13 @@ require([
                 valueList.push(value);
             }
             if (toggle.target.checked == true) {
-                mapView.whenLayerView(layers.navaidsLyr).then((layerView) => {
+                mapView.whenLayerView(navaidsLyr).then((layerView) => {
                     layerView.filter = {
                         where: field + " IN (" + valueList + ")"
                     }
                 });
             } else if (toggle.target.checked == false) {
-                mapView.whenLayerView(layers.navaidsLyr).then((layerView) => {
+                mapView.whenLayerView(navaidsLyr).then((layerView) => {
                     layerView.filter = {
                         where: "1=1"
                     }
@@ -493,7 +504,7 @@ require([
 
         mapView.when(() => {
             const sketch = new Sketch({
-                layer: graphicsLayers.lineGraphicsLyr,
+                layer: lineGraphicsLyr,
                 view: mapView,
                 creationMode: "update",
                 availableCreateTools: ["polyline"],
@@ -501,19 +512,19 @@ require([
                     enabled: true,
                     featureSources: [
                         {
-                            layer: layers.navaidsLyr,
+                            layer: navaidsLyr,
                             enabled: true
                         },
                         {
-                            layer: layers.fixesLyr,
+                            layer: fixesLyr,
                             enabled: true
                         },
                         {
-                            layer: layers.airportsLyr,
+                            layer: airportsLyr,
                             enabled: true
                         },
                         {
-                            layer: layers.vertiportsLyr,
+                            layer: vertiportsLyr,
                             enabled: true
                         }
                     ]                
@@ -743,7 +754,7 @@ require([
                     outFields: ["*"]
                 };
 
-                layers.existingRoutesLyr.queryFeatures(query)
+                existingRoutesLyr.queryFeatures(query)
                     .then((r) => {
                         for (let f of r.features) {
                             $("#existing-routes").append(
@@ -773,14 +784,14 @@ require([
             let wrappedInQuotes = selectedArr.map((oid) => `'${oid}'`);
             let itemString = wrappedInQuotes.join(",");
 
-            layers.existingRoutesLyr.definitionExpression = "Program = 'Archer' AND OBJECTID IN (" + itemString + ")";
+            existingRoutesLyr.definitionExpression = "Program = 'Archer' AND OBJECTID IN (" + itemString + ")";
         });
 
         function updateRouteRenderer (objectId, routeSelected) {
             let routeColor, geom, routeBufferName;
 
             // Query routes for matching OID
-            layers.existingRoutesLyr.queryFeatures(
+            existingRoutesLyr.queryFeatures(
                 {
                     where: "OBJECTID = " + objectId,
                     outFields: ["*"],
@@ -793,7 +804,7 @@ require([
                 routeBufferName = r.features[0].attributes.route_name;
             }).then(() => {
                 if (routeSelected == true) {
-                    layers.existingRoutesLyr.renderer.addUniqueValueInfo(
+                    existingRoutesLyr.renderer.addUniqueValueInfo(
                         {
                             label: routeBufferName,
                             value: objectId,
@@ -805,7 +816,7 @@ require([
                         }
                     );
 
-                    console.log(layers.existingRoutesLyr.renderer);
+                    console.log(existingRoutesLyr.renderer);
 
                     // Create a 0.6nm protection buffer around the selected route
                     const buffer = geometryEngine.buffer(geom, 0.3, "nautical-miles");
@@ -827,9 +838,9 @@ require([
                     );
                 } else {
                     // Remove the Unique Renderer Info for the deselected OID
-                    layers.existingRoutesLyr.renderer.removeUniqueValueInfo(objectId);
+                    existingRoutesLyr.renderer.removeUniqueValueInfo(objectId);
 
-                    console.log(layers.existingRoutesLyr.renderer);
+                    console.log(existingRoutesLyr.renderer);
 
                     // Find the graphic for the route that was deslected and remove the corresponding buffer
                     let removeGraphic = routeBuffer.graphics.find((g) => {
@@ -845,7 +856,7 @@ require([
         //#region Create New Route
    
         const pointSketchViewModel = new SketchViewModel({
-            layer: graphicsLayers.pointGraphicsLyr,
+            layer: pointGraphicsLyr,
             view: mapView,
             pointSymbol: {
                 type: "simple-marker",
@@ -857,19 +868,19 @@ require([
                 enabled: true,
                 featureSources: [
                     {
-                        layer: layers.navaidsLyr,
+                        layer: navaidsLyr,
                         enabled: true
                     },
                     {
-                        layer: layers.fixesLyr,
+                        layer: fixesLyr,
                         enabled: true
                     },
                     {
-                        layer: layers.airportsLyr,
+                        layer: airportsLyr,
                         enabled: true
                     },
                     {
-                        layer: layers.vertiportsLyr,
+                        layer: vertiportsLyr,
                         enabled: true
                     }
                 ]
@@ -925,7 +936,7 @@ require([
                     returnGeometry: false
                 };
 
-                layers.fixesLyr.queryFeatures(query)
+                fixesLyr.queryFeatures(query)
                     .then((results) => {
                         let fix_id = "";
                         if (results.features.length > 0) {
@@ -959,7 +970,7 @@ require([
                         returnGeometry: false
                     };
 
-                    layers.fixesLyr.queryFeatures(query)
+                    fixesLyr.queryFeatures(query)
                         .then((results) => {
                             let fix_id = "";
                             if (results.features.length > 0) {
@@ -1166,7 +1177,7 @@ require([
                 addFeatures: [polylineGraphic]
             };
 
-            layers.existingRoutesLyr
+            existingRoutesLyr
                 .applyEdits(edits)
                 .then((r) => {
 
@@ -1184,7 +1195,7 @@ require([
                     let wrappedInQuotes = selectedArr.map((oid) => `'${oid}'`);
                     let itemString = wrappedInQuotes.join(",");
         
-                    layers.existingRoutesLyr.definitionExpression = "Program = 'Archer' AND OBJECTID IN (" + itemString + ")";
+                    existingRoutesLyr.definitionExpression = "Program = 'Archer' AND OBJECTID IN (" + itemString + ")";
 
                     // Delete the current list of existing routes
                     $("#existing-routes").empty();
@@ -1248,7 +1259,7 @@ require([
 
         mapView.on("click", (e) => {
             const opts = {
-                include: layers.existingRoutesLyr
+                include: existingRoutesLyr
             };
 
             mapView.hitTest(e, opts)
@@ -1262,7 +1273,7 @@ require([
 
         sceneView.on("click", (e) => {
             const opts = {
-                include: layers.existingRoutesLyr
+                include: existingRoutesLyr
             };
 
             sceneView.hitTest(e, opts)
@@ -1282,7 +1293,7 @@ require([
                 returnZ: true
             };
 
-            layers.existingRoutesLyr.queryFeatures(query)
+            existingRoutesLyr.queryFeatures(query)
                 .then((r) => {
                     selectedFeature = r.features[0];
 
@@ -1406,19 +1417,19 @@ require([
                     selfEnabled: false,
                     featureSources: [
                         {
-                            layer: layers.navaidsLyr,
+                            layer: navaidsLyr,
                             enabled: true
                         },
                         {
-                            layer: layers.fixesLyr,
+                            layer: fixesLyr,
                             enabled: true
                         },
                         {
-                            layer: layers.airportsLyr,
+                            layer: airportsLyr,
                             enabled: true
                         },
                         {
-                            layer: layers.vertiportsLyr,
+                            layer: vertiportsLyr,
                             enabled: true
                         }
                     ]
@@ -1428,7 +1439,7 @@ require([
                 container: document.createElement("div"),
                 layerInfos: [
                     {
-                        layer: layers.existingRoutesLyr,
+                        layer: existingRoutesLyr,
                         formTemplate: {
                             title: "Route Attributes",
                             description: "Enter or Modify all route attributes below.",
@@ -1455,7 +1466,7 @@ require([
             })
         });
 
-        layers.existingRoutesLyr.on("edits", (e) => {
+        existingRoutesLyr.on("edits", (e) => {
             // After a route is deleted
             if (e.deletedFeatures.length > 0) {
 
@@ -1528,7 +1539,7 @@ require([
             };
             mapView.graphics.add(polylineGraphic);
     
-            layers.existingRoutesLyr
+            existingRoutesLyr
                 .applyEdits(edits)
                 .then(() => { 
                     drawPath(selectedFeature.geometry.paths);
@@ -1540,7 +1551,7 @@ require([
                         returnZ: true
                     };
         
-                    layers.existingRoutesLyr.queryFeatures(query)
+                    existingRoutesLyr.queryFeatures(query)
                         .then((r) => {
                             selectedFeature = r.features[0];
                             mapView
@@ -1623,19 +1634,19 @@ require([
                     selfEnabled: false,
                     featureSources: [
                         {
-                            layer: layers.navaidsLyr,
+                            layer: navaidsLyr,
                             enabled: true
                         },
                         {
-                            layer: layers.fixesLyr,
+                            layer: fixesLyr,
                             enabled: true
                         },
                         {
-                            layer: layers.airportsLyr,
+                            layer: airportsLyr,
                             enabled: true
                         },
                         {
-                            layer: layers.vertiportsLyr,
+                            layer: vertiportsLyr,
                             enabled: true
                         }
                     ]
@@ -1645,7 +1656,7 @@ require([
                 container: document.createElement("div"),
                 layerInfos: [
                     {
-                        layer: layers.existingRoutesLyr,
+                        layer: existingRoutesLyr,
                         formTemplate: {
                             title: "Route Attributes",
                             description: "Enter or Modify all route attributes below.",
