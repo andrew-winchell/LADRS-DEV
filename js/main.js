@@ -1426,7 +1426,7 @@ require([
                 console.log(graphic)
 
                 let query = {
-                    geometry: graphic.geometry,
+                    geometry: graphic,
                     spatialRelationship: "intersects",
                     outFields: ["*"],
                     returnGeometry: false
