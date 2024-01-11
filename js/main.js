@@ -1436,6 +1436,7 @@ require([
 
                 fixesLyr.queryFeatures(query)
                     .then((results) => {
+                        console.log(results);
                         let fix_id = results.features[0].attributes.FIX_ID;
                         let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0, fix_id];
 
