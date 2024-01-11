@@ -1441,7 +1441,7 @@ require([
 
                         createTableRow(point);
         
-                        //multipointVertices.push(coords);
+                        multipointVertices.push(coords);
                     })
 
                 $("#waypoint-list").css("display", "block");
@@ -1473,12 +1473,12 @@ require([
                             
                             createTableRow(point);
                             
-                            //multipointVertices.push(coords);
+                            multipointVertices.push(coords);
                         })
 
 
 
-                    //drawPath(multipointVertices);
+                    drawPath(multipointVertices);
 
                     if (multipointVertices.length > 1) {
                         $("#complete-route")[0].disabled = false;
@@ -1593,6 +1593,7 @@ require([
         }
 
         function drawPath (vertices) {
+            console.log(vertices);
             mapView.graphics.removeAll();
 
             let polyline = new Polyline({
