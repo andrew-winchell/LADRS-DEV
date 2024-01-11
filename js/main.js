@@ -1335,7 +1335,7 @@ require([
         //#region Create New Route
    
         const pointSketchViewModel = new SketchViewModel({
-            layer: pointGraphicsLyr,
+            layer: graphicsLayers.pointGraphicsLyr,
             view: mapView,
             pointSymbol: {
                 type: "simple-marker",
