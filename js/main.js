@@ -1466,6 +1466,7 @@ require([
                     fixesLyr.queryFeatures(query)
                         .then((results) => {
                             let fix_id = "";
+                            console.log(results);
                             if (results.features > 0) {
                                 fix_id = results.features[0].attributes.FIX_ID;
                             }
@@ -1568,7 +1569,7 @@ require([
 
         function createTableRow (point) {
             console.log(point);
-            let vertice = [point[0], point[1], point[2]];
+            let vertice = [[point[0], point[1], point[2]]];
             let multipoint = new Multipoint({
                 points: vertice,
                 spatialReference: mapView.spatialReference
