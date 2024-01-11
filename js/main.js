@@ -1,5 +1,5 @@
 require([
-    "modules/userAuthentication",
+    "js/modules/userAuthentication",
     "esri/portal/Portal",
     "esri/portal/PortalQueryParams",
     "esri/views/SceneView",
