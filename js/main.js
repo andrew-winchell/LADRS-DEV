@@ -1101,8 +1101,9 @@ require([
                         let mapPt = mapView.toMap(move);
                         let coordinates = sampler.queryElevation(mapPt)
                         $("#pointer-coords").html("Lat: " + coordinates.latitude + "  Long: " + coordinates.longitude + "  Elev: " + (coordinates.z) + " ft");
-                    })
-                })
+                        pointerElevation = coordinates.z
+                    });
+                });
         });
 
         //#endregion
@@ -1235,7 +1236,8 @@ require([
             selectedFeature,
             editor,
             multipointVertices = [],
-            userLineColor;
+            userLineColor,
+            pointerElevation;
 
         //#endregion
 
@@ -1415,8 +1417,7 @@ require([
                 console.log("complete feature");
             } else if (e.state == "start") {
                 $("#waypoint-table tbody tr").remove();
-
-                console.log(elevation);
+                console.log(pointerElevation);
                 
                 let graphic = new Point({
                     x: e.toolEventInfo.vertices[0].coordinates[0],
