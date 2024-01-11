@@ -1414,18 +1414,36 @@ require([
             if (e.state == "complete") {
                 console.log("complete feature");
             } else if (e.state == "start") {
-                console.log(e)
                 $("#waypoint-table tbody tr").remove();
 
-                let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0, ""];
+                let query = {
+                    geometry: e.graphic.geometry,
+                    spatialRelationship: "intersects",
+                    outFields: ["*"],
+                    returnGeometry: false
+                };
 
-                createTableRow(point);
+                console.log(fixesLyr.queryFeatures(query))
+
+                let coords = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0];
+
+                createTableRow([coords]);
 
                 multipointVertices.push(coords);
 
                 $("#waypoint-list").css("display", "block");
             } else if (e.state == "active") {
                 if (e.toolEventInfo.type == "vertex-add") {
+
+                    let query = {
+                        geometry: e.graphic.geometry,
+                        spatialRelationship: "intersects",
+                        outFields: ["*"],
+                        returnGeometry: false
+                    };
+                    
+                    console.log(fixesLyr.queryFeatures(query))
+
                     let coords = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0];
 
                     createTableRow([coords]);
@@ -1520,8 +1538,7 @@ require([
             elevationProfile.input = graphic;
         });
 
-        function createTableRow (point) {
-            let vertice = [point[0], point[1], point[2]];
+        function createTableRow (vertice) {
             let multipoint = new Multipoint({
                 points: vertice,
                 spatialReference: mapView.spatialReference
