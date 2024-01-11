@@ -1,12 +1,10 @@
 require([
     "js/modules/userAuthentication.js",
+    "js/modules/layers.js",
     "esri/views/SceneView",
     "esri/WebScene",
-    "esri/Map",
     "esri/views/MapView",
     "esri/Graphic",
-    "esri/layers/GraphicsLayer",
-    "esri/layers/FeatureLayer",
     "esri/smartMapping/statistics/uniqueValues",
     "esri/layers/ElevationLayer",
     "esri/views/draw/Draw",
@@ -30,8 +28,7 @@ require([
     "esri/rest/support/BufferParameters",
     "esri/rest/geometryService"
 ], (
-        userAuthentication, SceneView, WebScene, Map, MapView, Graphic, GraphicsLayer,
-        FeatureLayer, uniqueValues, ElevationLayer, Draw, LayerList, Sketch, SketchViewModel, Search,
+        userAuthentication, SceneView, WebScene, MapView, Graphic, uniqueValues, ElevationLayer, Draw, LayerList, Sketch, SketchViewModel, Search,
         BasemapGallery, Expand, Editor, webMercatorUtils, Compass, Multipoint, Polyline, Point,
         geometryEngine, ElevationProfile, reactiveUtils, geodesicUtils, Basemap, BufferParameters, geometryService
     ) => {
@@ -40,7 +37,7 @@ require([
 
         //#region AGOL Hosted Feature Layers
 
-        const airportsLyr = new FeatureLayer({
+        /*const airportsLyr = new FeatureLayer({
             url: "https://services6.arcgis.com/ssFJjBXIUyZDrSYZ/arcgis/rest/services/US_Airport/FeatureServer/0",
             title: "Airports",
             outFields: [
@@ -505,7 +502,7 @@ require([
             title: "Route Protection - 0.6nm",
             graphics: []
         });
-
+        
         //#endregion
 
         //#region Map View Configurations
@@ -524,6 +521,7 @@ require([
                 routeBuffer
             ]
         });
+        */
 
         const mapView = new MapView({
             map: map,
