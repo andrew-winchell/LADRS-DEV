@@ -1415,6 +1415,8 @@ require([
                 console.log("complete feature");
             } else if (e.state == "start") {
                 $("#waypoint-table tbody tr").remove();
+
+                console.log(e)
                 
                 let graphic = new Point({
                     x: e.toolEventInfo.vertices[0].coordinates[0],
