@@ -1,7 +1,6 @@
 require([
+    "modules/userAuthentication",
     "esri/portal/Portal",
-    "esri/identity/OAuthInfo",
-    "esri/identity/IdentityManager",
     "esri/portal/PortalQueryParams",
     "esri/views/SceneView",
     "esri/WebScene",
@@ -33,7 +32,7 @@ require([
     "esri/rest/support/BufferParameters",
     "esri/rest/geometryService"
 ], (
-        Portal, OAuthInfo, esriId, PortalQueryParams, SceneView, WebScene, Map, MapView, Graphic, GraphicsLayer,
+        userAuthentication, Portal, PortalQueryParams, SceneView, WebScene, Map, MapView, Graphic, GraphicsLayer,
         FeatureLayer, uniqueValues, ElevationLayer, Draw, LayerList, Sketch, SketchViewModel, Search,
         BasemapGallery, Expand, Editor, webMercatorUtils, Compass, Multipoint, Polyline, Point,
         geometryEngine, ElevationProfile, reactiveUtils, geodesicUtils, Basemap, BufferParameters, geometryService
@@ -41,7 +40,8 @@ require([
 
         //#region ArcGIS Online User Authentication
 
-        const info = new OAuthInfo({
+        userAuthentication.authenticateUser();
+        /*const info = new OAuthInfo({
             appId: "ewP4KhzNqP19llp8",
             portalUrl: "https://cobecconsulting.maps.arcgis.com",
             authNamespace: "portal_oauth_inline",
@@ -56,6 +56,7 @@ require([
             }).catch(() => {
                 console.log("User not signed in.")
             });
+        */
 
         //#endregion
 
