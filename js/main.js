@@ -1593,7 +1593,6 @@ require([
         }
 
         function drawPath (vertices) {
-            console.log(vertices);
             mapView.graphics.removeAll();
 
             let polyline = new Polyline({
