@@ -983,7 +983,7 @@ require([
 
         mapView.when(() => {
             const sketch = new Sketch({
-                layer: lineGraphicsLyr,
+                layer: graphicsLayers.lineGraphicsLyr,
                 view: mapView,
                 creationMode: "update",
                 availableCreateTools: ["polyline"],
@@ -1233,7 +1233,7 @@ require([
                     outFields: ["*"]
                 };
 
-                existingRoutesLyr.queryFeatures(query)
+                layers.existingRoutesLyr.queryFeatures(query)
                     .then((r) => {
                         for (let f of r.features) {
                             $("#existing-routes").append(
