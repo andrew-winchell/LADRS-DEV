@@ -28,12 +28,16 @@ require([
     "esri/rest/support/BufferParameters",
     "esri/rest/geometryService"
 ], (
-        userAuthentication, SceneView, WebScene, MapView, Graphic, uniqueValues, ElevationLayer, Draw, LayerList, Sketch, SketchViewModel, Search,
+        userAuthentication, layersModule, SceneView, WebScene, MapView, Graphic, uniqueValues, ElevationLayer, Draw, LayerList, Sketch, SketchViewModel, Search,
         BasemapGallery, Expand, Editor, webMercatorUtils, Compass, Multipoint, Polyline, Point,
         geometryEngine, ElevationProfile, reactiveUtils, geodesicUtils, Basemap, BufferParameters, geometryService
     ) => {
 
         userAuthentication.authenticateUser();
+
+        const map = layersModule.map;
+        const layers = layersModule.layers;
+        const graphicsLayers = layersModule.graphicsLayers;
 
         //#region AGOL Hosted Feature Layers
 
