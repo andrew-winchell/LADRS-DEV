@@ -1418,7 +1418,7 @@ require([
                 console.log(e)
 
                 let query = {
-                    geometry: e.,
+                    geometry: e,
                     spatialRelationship: "intersects",
                     outFields: ["*"],
                     returnGeometry: false
