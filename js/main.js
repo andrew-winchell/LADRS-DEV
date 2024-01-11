@@ -1436,12 +1436,12 @@ require([
 
                 fixesLyr.queryFeatures(query)
                     .then((results) => {
-                        console.log(results);
-                        let coords = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0];
+                        let fix_id = results.features[0].attributes.FIX_ID;
+                        let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0, fix_id];
 
-                        createTableRow([coords]);
+                        createTableRow(point);
         
-                        multipointVertices.push(coords);
+                        //multipointVertices.push(coords);
                     })
 
                 $("#waypoint-list").css("display", "block");
@@ -1551,7 +1551,8 @@ require([
             elevationProfile.input = graphic;
         });
 
-        function createTableRow (vertice) {
+        function createTableRow (point) {
+            let vertice = [point[0], point[1], point[2]];
             let multipoint = new Multipoint({
                 points: vertice,
                 spatialReference: mapView.spatialReference
@@ -1573,6 +1574,7 @@ require([
             nextY.setAttribute("contentEditable", "true");
             nextZ.innerHTML = (mapPt.z * 3.281).toFixed(0);
             nextZ.setAttribute("contentEditable", "true");
+            nextFix.innerHTML = point[3];
         }
 
         function drawPath (vertices) {
