@@ -1415,10 +1415,10 @@ require([
                 console.log("complete feature");
             } else if (e.state == "start") {
                 $("#waypoint-table tbody tr").remove();
+                console.log(e)
 
-                let snappedGeometry = geometryEngine.project(e.graphic.geometry, { wkid: 4326 });
                 let query = {
-                    geometry: snappedGeometry,
+                    geometry: e.,
                     spatialRelationship: "intersects",
                     outFields: ["*"],
                     returnGeometry: false
