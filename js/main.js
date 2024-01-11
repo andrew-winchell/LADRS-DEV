@@ -1427,6 +1427,8 @@ require([
 
                 let query = {
                     geometry: graphic,
+                    distance: 10,
+                    units: "feet",
                     spatialRelationship: "intersects",
                     outFields: ["*"],
                     returnGeometry: false
