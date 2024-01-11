@@ -991,19 +991,19 @@ require([
                     enabled: true,
                     featureSources: [
                         {
-                            layer: navaidsLyr,
+                            layer: layers.navaidsLyr,
                             enabled: true
                         },
                         {
-                            layer: fixesLyr,
+                            layer: layers.fixesLyr,
                             enabled: true
                         },
                         {
-                            layer: airportsLyr,
+                            layer: layers.airportsLyr,
                             enabled: true
                         },
                         {
-                            layer: vertiportsLyr,
+                            layer: layers.vertiportsLyr,
                             enabled: true
                         }
                     ]                
@@ -1896,19 +1896,19 @@ require([
                     selfEnabled: false,
                     featureSources: [
                         {
-                            layer: navaidsLyr,
+                            layer: layers.navaidsLyr,
                             enabled: true
                         },
                         {
-                            layer: fixesLyr,
+                            layer: layers.fixesLyr,
                             enabled: true
                         },
                         {
-                            layer: airportsLyr,
+                            layer: layers.airportsLyr,
                             enabled: true
                         },
                         {
-                            layer: vertiportsLyr,
+                            layer: layers.vertiportsLyr,
                             enabled: true
                         }
                     ]
@@ -1945,7 +1945,7 @@ require([
             })
         });
 
-        existingRoutesLyr.on("edits", (e) => {
+        layers.existingRoutesLyr.on("edits", (e) => {
             // After a route is deleted
             if (e.deletedFeatures.length > 0) {
 
@@ -2018,7 +2018,7 @@ require([
             };
             mapView.graphics.add(polylineGraphic);
     
-            existingRoutesLyr
+            layers.existingRoutesLyr
                 .applyEdits(edits)
                 .then(() => { 
                     drawPath(selectedFeature.geometry.paths);
@@ -2135,7 +2135,7 @@ require([
                 container: document.createElement("div"),
                 layerInfos: [
                     {
-                        layer: existingRoutesLyr,
+                        layer: layers.existingRoutesLyr,
                         formTemplate: {
                             title: "Route Attributes",
                             description: "Enter or Modify all route attributes below.",
