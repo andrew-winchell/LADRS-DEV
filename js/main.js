@@ -1410,10 +1410,11 @@ require([
         });
 
         // After add vertices is clicked, the sketch view model becomes active and starts creating a multipoint collection
-        pointSketchViewModel.on("update", (e) => {
+        pointSketchViewModel.on("create", (e) => {
             if (e.state == "complete") {
                 console.log("complete feature");
             } else if (e.state == "start") {
+                console.log(e)
                 $("#waypoint-table tbody tr").remove();
 
                 let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0, ""];
