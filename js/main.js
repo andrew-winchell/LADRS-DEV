@@ -626,6 +626,7 @@ require([
 
         function switchView () {
             const is3D = activeView.type === "3d";
+            console.log(activeView)
             const activeViewpoint = activeView.viewpoint.clone();
         
             activeView.container = null;

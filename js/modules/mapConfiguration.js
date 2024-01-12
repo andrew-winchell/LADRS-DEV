@@ -37,7 +37,7 @@ define([
     return {
         mapView: mapView,
         sceneView: sceneView,
-        activeView: map,
+        activeView: mapView,
         container: "view-div"
     };
     
