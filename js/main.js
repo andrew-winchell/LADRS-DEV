@@ -564,7 +564,7 @@ require([
 
         let elevationLayer;
         let elevationSampler;
-        
+
         mapView.when(() => {
             elevationLayer = new ElevationLayer({
                 url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
@@ -899,6 +899,9 @@ require([
                     y: e.toolEventInfo.vertices[0].coordinates[1],
                     spatialReference: mapView.spatialReference
                 });
+
+                let altitude = elevationSampler.queryElevation(graphic);
+                console.log(altitude);
 
                 let query = {
                     geometry: graphic,
