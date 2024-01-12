@@ -1,8 +1,7 @@
 define([
     "esri/views/MapView",
     "esri/views/SceneView",
-    "js/modules/layers.js",
-    "esri/layers/ElevationLayer"
+    "js/modules/layers.js"
 ], (MapView, SceneView, layersModule, ElevationLayer) => {
 
     const map = layersModule.map;
@@ -19,10 +18,7 @@ define([
                 position: "bottom-right",
                 breakpoint: false
             }
-        },
-        ground: new ElevationLayer({
-            url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
-        })
+        }
     });
 
     const sceneView = new SceneView({
@@ -35,10 +31,7 @@ define([
                 position: "bottom-right",
                 breakpoint: false
             }
-        },
-        ground: new ElevationLayer({
-            url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
-        })
+        }
     });
 
     return {
