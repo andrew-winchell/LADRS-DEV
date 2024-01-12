@@ -1,8 +1,9 @@
 define([
     "esri/views/MapView",
     "esri/views/SceneView",
-    "js/modules/layers.js"
-], (MapView, SceneView, layersModule) => {
+    "js/modules/layers.js",
+    "esri/layers/ElevationLayer"
+], (MapView, SceneView, layersModule, ElevationLayer) => {
 
     const map = layersModule.map;
 
