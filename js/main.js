@@ -720,7 +720,7 @@ require([
         function populateExistingRoutes () {
             mapView.when(() => {
                 const query = {
-                    where: "program = 'Archer'", // Modify where clause depending on the user program
+                    where: "program = 'Supernal'", // Modify where clause depending on the user program
                     outFields: ["*"]
                 };
 
@@ -754,7 +754,7 @@ require([
             let wrappedInQuotes = selectedArr.map((oid) => `'${oid}'`);
             let itemString = wrappedInQuotes.join(",");
 
-            existingRoutesLyr.definitionExpression = "Program = 'Archer' AND OBJECTID IN (" + itemString + ")";
+            existingRoutesLyr.definitionExpression = "Program = 'Supernal' AND OBJECTID IN (" + itemString + ")";
         });
 
         function updateRouteRenderer (objectId, routeSelected) {
@@ -1140,7 +1140,7 @@ require([
                     "departing_fac": rDepart,
                     "arriving_fac": rArrival,
                     "display_color": userLineColor,
-                    "program": "Archer" // Change this to match the program that is licensed
+                    "program": "Supernal" // Change this to match the program that is licensed
                 }
             });
 
@@ -1170,7 +1170,7 @@ require([
                     let wrappedInQuotes = selectedArr.map((oid) => `'${oid}'`);
                     let itemString = wrappedInQuotes.join(",");
         
-                    existingRoutesLyr.definitionExpression = "Program = 'Archer' AND OBJECTID IN (" + itemString + ")";
+                    existingRoutesLyr.definitionExpression = "Program = 'Supernal' AND OBJECTID IN (" + itemString + ")";
 
                     // Delete the current list of existing routes
                     $("#existing-routes").empty();
