@@ -562,19 +562,23 @@ require([
 
         //#region Pointer Hover X/Y/Z Coordinates
 
+        let elevationLayer;
+        let elevationSampler;
+        
         mapView.when(() => {
-            const elevation = new ElevationLayer({
+            elevationLayer = new ElevationLayer({
                 url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
             });
-            return elevation.load();
-        }).then((elevation) => {
-            elevation.createElevationSampler(mapView.extent)
+            return elevationLayer.load();
+        }).then(() => {
+            elevationLayer.createElevationSampler(mapView.extent)
                 .then((sampler) => {
+                    elevationSampler = sampler;
+
                     mapView.on("pointer-move", (move) => {
                         let mapPt = mapView.toMap(move);
-                        let coordinates = sampler.queryElevation(mapPt)
+                        let coordinates = elevationSampler.queryElevation(mapPt)
                         $("#pointer-coords").html("Lat: " + coordinates.latitude + "  Long: " + coordinates.longitude + "  Elev: " + (coordinates.z * 3.2808399) + " ft");
-                        pointerElevation = coordinates.z
                     });
                 });
         });
@@ -710,7 +714,6 @@ require([
             editor,
             multipointVertices = [],
             userLineColor,
-            pointerElevation;
 
         //#endregion
 
@@ -890,7 +893,6 @@ require([
                 console.log("complete feature");
             } else if (e.state == "start") {
                 $("#waypoint-table tbody tr").remove();
-                console.log(pointerElevation);
                 
                 let graphic = new Point({
                     x: e.toolEventInfo.vertices[0].coordinates[0],
