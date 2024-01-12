@@ -19,7 +19,9 @@ define([
                 breakpoint: false
             }
         },
-        ground: "world-elevation"
+        ground: new ElevationLayer({
+            url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+        })
     });
 
     const sceneView = new SceneView({
@@ -33,7 +35,9 @@ define([
                 breakpoint: false
             }
         },
-        ground: "world-elevation"
+        ground: new ElevationLayer({
+            url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+        })
     });
 
     return {
