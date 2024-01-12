@@ -56,6 +56,10 @@ require([
         let activeView = mapConfiguration.activeView;
         const container = mapConfiguration.container;
 
+        // Elevation Profile Module
+        const elevationProfile = elevationProfileModule.createElevationProfile(mapView, "elevation-profile");
+        const elevationProfile3D = elevationProfileModule.createElevationProfile(sceneView, "elevation-profile3d");
+        
         //#region Layer Filters
 
         let routeSelection = document.createElement("calcite-combobox");
@@ -506,13 +510,8 @@ require([
 
         //#endregion
 
-        const elevationProfile = elevationProfileModule.createElevationProfile(mapView, "elevation-profile");
-
-        const elevationProfile3D = elevationProfileModule.createElevationProfile(sceneView, "elevation-profile3d");
-
         //#region Pointer Hover X/Y/Z Coordinates
 
-        
         mapView.when(() => {
             const elevation = new ElevationLayer({
                 url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"

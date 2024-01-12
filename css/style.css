@@ -134,3 +134,7 @@ html, body, #view-div, #inset-div {
 .esri-elevation-profile__header {
   display: none;
 }
+
+#elevation-profile .esri-profile-chart-text {
+  fill: lime;
+}
