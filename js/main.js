@@ -585,15 +585,12 @@ require([
                 .then((sampler) => {
                     mapView.on("pointer-move", (move) => {
                         let mapPt = mapView.toMap(move);
-                        sampler.queryElevation(mapPt)
-                            .then((coordinates) => {
-                                console.log(coordinates);
-                                $("#pointer-coords").html("Lat: " + coordinates.geometry.latitude + "  Long: " + coordinates.geometry.longitude + "  Elev: " + (coordinates.geometry.z * 3.2808399) + " ft");
-                            })
-
+                        let coordinates = sampler.queryElevation(mapPt)
+                        console.log(coordinates);
+                        $("#pointer-coords").html("Lat: " + coordinates.geometry.latitude + "  Long: " + coordinates.geometry.longitude + "  Elev: " + (coordinates.geometry.z * 3.2808399) + " ft");
+                    })
                 })
             })
-        })
 
         //#endregion
 
