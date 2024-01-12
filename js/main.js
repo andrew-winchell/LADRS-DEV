@@ -588,7 +588,7 @@ require([
                 let mapPt = mapView.toMap(move);
                 map.ground.queryElevation(mapPt)
                     .then((coordinates) => {
-                        console.log(coordinates);
+                        $("#pointer-coords").html("Lat: " + coordinates.geometry.latitude + "  Long: " + coordinates.geometry.longitude + "  Elev: " + (coordinates.geometry.z * 3.2808399) + " ft");
                     })
             })
         })
