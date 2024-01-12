@@ -900,7 +900,7 @@ require([
                     spatialReference: mapView.spatialReference
                 });
 
-                let altitude = elevationSampler.elevationAt(graphic.x, graphic.y);
+                let altitude = map.ground.queryElevation(graphic);
                 console.log(altitude);
 
                 let query = {
