@@ -14,14 +14,20 @@ define([
     });
 
     userAuthenticationModule.authenticateUser = () => {
-        esriId.registerOAuthInfos([info]);
-        esriId.getCredential(info.portalUrl + "/sharing");
-        esriId.checkSignInStatus(info.portalUrl + "/sharing")
-            .then(() => {
-                console.log("Sign In Successful.");
-            }).catch(() => {
-                console.log("User not signed in.")
-            });
+        const credential = esriId.getCredential(info.portalUrl + "/sharing");
+
+        if (credential) {
+            console.log("User already signed in.");
+            console.log("Username:", credential.userId);
+        } else {
+            esriId.registerOAuthInfos([info]);
+            esriId.checkSignInStatus(info.portalUrl + "/sharing")
+                .then(() => {
+                    console.log("Sign In Successful.");
+                }).catch(() => {
+                    console.log("User not signed in.")
+                });
+        }
     };
 
     return userAuthenticationModule;
