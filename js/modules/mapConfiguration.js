@@ -18,7 +18,8 @@ define([
                 position: "bottom-right",
                 breakpoint: false
             }
-        }
+        },
+        ground: "world-elevation"
     });
 
     const sceneView = new SceneView({
@@ -31,7 +32,8 @@ define([
                 position: "bottom-right",
                 breakpoint: false
             }
-        }
+        },
+        ground: "world-elevation"
     });
 
     return {
