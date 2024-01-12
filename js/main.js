@@ -2,8 +2,6 @@ require([
     "js/modules/userAuthentication.js",
     "js/modules/layers.js",
     "js/modules/mapConfiguration.js",
-    "esri/views/SceneView",
-    "esri/views/MapView",
     "esri/Graphic",
     "esri/smartMapping/statistics/uniqueValues",
     "esri/layers/ElevationLayer",
@@ -28,7 +26,7 @@ require([
     "esri/rest/support/BufferParameters",
     "esri/rest/geometryService"
 ], (
-        userAuthentication, layersModule, mapConfiguration, SceneView, MapView, Graphic, uniqueValues, ElevationLayer, Draw, LayerList, Sketch, SketchViewModel, Search,
+        userAuthentication, layersModule, mapConfiguration, Graphic, uniqueValues, ElevationLayer, Draw, LayerList, Sketch, SketchViewModel, Search,
         BasemapGallery, Expand, Editor, webMercatorUtils, Compass, Multipoint, Polyline, Point,
         geometryEngine, ElevationProfile, reactiveUtils, geodesicUtils, Basemap, BufferParameters, geometryService
     ) => {
