@@ -565,7 +565,7 @@ require([
         let elevationLayer;
         let elevationSampler;
 
-        mapView.when(() => {
+        /*mapView.when(() => {
             elevationLayer = new ElevationLayer({
                 url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
             });
@@ -581,7 +581,15 @@ require([
                         $("#pointer-coords").html("Lat: " + coordinates.latitude + "  Long: " + coordinates.longitude + "  Elev: " + (coordinates.z * 3.2808399) + " ft");
                     });
                 });
-        });
+        });*/
+
+        mapView.when(() => {
+            mapView.on("pointer-move", (move) => {
+                let mapPt = mapView.toMap(move);
+                let coordinates = map.ground.queryElevation(mapPt);
+                console.log(coordinates);
+            })
+        })
 
         //#endregion
 
