@@ -1,8 +1,8 @@
 require([
     "js/modules/userAuthentication.js",
     "js/modules/layers.js",
+    "js/modules/mapConfiguration.js",
     "esri/views/SceneView",
-    "esri/WebScene",
     "esri/views/MapView",
     "esri/Graphic",
     "esri/smartMapping/statistics/uniqueValues",
@@ -28,7 +28,7 @@ require([
     "esri/rest/support/BufferParameters",
     "esri/rest/geometryService"
 ], (
-        userAuthentication, layersModule, SceneView, WebScene, MapView, Graphic, uniqueValues, ElevationLayer, Draw, LayerList, Sketch, SketchViewModel, Search,
+        userAuthentication, layersModule, mapConfiguration, SceneView, MapView, Graphic, uniqueValues, ElevationLayer, Draw, LayerList, Sketch, SketchViewModel, Search,
         BasemapGallery, Expand, Editor, webMercatorUtils, Compass, Multipoint, Polyline, Point,
         geometryEngine, ElevationProfile, reactiveUtils, geodesicUtils, Basemap, BufferParameters, geometryService
     ) => {
@@ -50,7 +50,12 @@ require([
         const pointGraphicsLyr = layersModule.graphicsLayers.pointGraphicsLyr;
         const routeBuffer = layersModule.graphicsLayers.routeBuffer;
 
-        const mapView = new MapView({
+        const mapView = mapConfiguration.mapView;
+        const sceneView = mapConfiguration.sceneView;
+        const activeView = mapConfiguration.activeView;
+        const container = mapConfiguration.container;
+
+        /*const mapView = new MapView({
             map: map,
             container: "view-div",
             zoom: 3,
@@ -83,7 +88,7 @@ require([
             sceneView: sceneView,
             activeView: mapView,
             container: "view-div"
-        };
+        };*/
 
         //#region Layer Filters
 
@@ -617,22 +622,22 @@ require([
         $("#btn3d").on("click", () => { switchView() });
 
         function switchView () {
-            const is3D = appConfig.activeView.type === "3d";
-            const activeViewpoint = appConfig.activeView.viewpoint.clone();
+            const is3D = activeView.type === "3d";
+            const activeViewpoint = activeView.viewpoint.clone();
         
-            appConfig.activeView.container = null;
+            activeView.container = null;
         
             if (is3D) {
                 layerList.view = mapView;
 
-                appConfig.mapView.viewpoint = activeViewpoint;
-                appConfig.mapView.container = appConfig.container;
+                mapView.viewpoint = activeViewpoint;
+                mapView.container = container;
                
                 map.basemap = "gray-vector";
 
                 to2DSymbology();
 
-                appConfig.activeView = appConfig.mapView;
+                activeView = mapView;
 
                 $("#elevation-profile").css("display", "block");
                 $("#elevation-profile3d").css("display", "none");
@@ -640,8 +645,8 @@ require([
             } else {
                 layerList.view = sceneView;
 
-                appConfig.sceneView.viewpoint = activeViewpoint;
-                appConfig.sceneView.container = appConfig.container;
+                sceneView.viewpoint = activeViewpoint;
+                sceneView.container = container;
 
                 map.basemap = new Basemap({
                     portalItem: {
@@ -651,7 +656,7 @@ require([
 
                 to3DSymbology();
 
-                appConfig.activeView = appConfig.sceneView;
+                activeView = sceneView;
 
                 $("#elevation-profile").css("display", "none");
                 $("#elevation-profile3d").css("display", "block");
@@ -706,16 +711,16 @@ require([
         //#region Sync 2D/3D Views
 
         const views = [mapView, sceneView];
-        let activeView;
+        let syncView;
 
         const sync = (source) => {
-            if (!activeView || !activeView.viewpoint || activeView !== source) {
+            if (!syncView || !syncView.viewpoint || syncView !== source) {
                 return;
             }
 
             for (const view of views) {
-                if (view !== activeView) {
-                    view.viewpoint = activeView.viewpoint;
+                if (view !== syncView) {
+                    view.viewpoint = syncView.viewpoint;
                 }
             }
         };
@@ -723,8 +728,8 @@ require([
         for (const view of views) {
             view.watch(["interacting", "animation"],
             () => {
-                activeView = view;
-                sync(activeView);
+                syncView = view;
+                sync(syncView);
             });
 
             view.watch("viewpoint", () => sync(view));
@@ -1204,7 +1209,7 @@ require([
                         populateExistingRoutes();
                     }, 1000);
 
-                    selectExistingRoute(oid, appConfig.activeView.type);
+                    selectExistingRoute(oid, activeView.type);
 
                     mapView.graphics.removeAll();
 
@@ -1266,7 +1271,7 @@ require([
                 .then((r) => {
                     if (r.results.length) {
                         oid = r.results[0].graphic.attributes.OBJECTID;
-                        selectExistingRoute(oid, appConfig.activeView.type);
+                        selectExistingRoute(oid, activeView.type);
                     }
                 });
         });
@@ -1280,7 +1285,7 @@ require([
                 .then((r) => {
                     if (r.results.length) {
                         oid = r.results[0].graphic.attributes.OBJECTID;
-                        selectExistingRoute(oid, appConfig.activeView.type);
+                        selectExistingRoute(oid, activeView.type);
                     }
                 });
         });
