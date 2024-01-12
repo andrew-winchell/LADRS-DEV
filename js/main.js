@@ -586,8 +586,10 @@ require([
         mapView.when(() => {
             mapView.on("pointer-move", (move) => {
                 let mapPt = mapView.toMap(move);
-                let coordinates = map.ground.queryElevation(mapPt);
-                console.log(coordinates);
+                map.ground.queryElevation(mapPt)
+                    then((coordinates) => {
+                        console.log(coordinates);
+                    })
             })
         })
 
