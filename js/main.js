@@ -925,7 +925,7 @@ require([
         
                                 drawPath(multipointVertices);
                             });
-                    })
+                    });
 
                 $("#waypoint-list").css("display", "block");
             } else if (e.state == "active") {
@@ -937,28 +937,31 @@ require([
                         spatialReference: mapView.spatialReference
                     });
 
-                    let query = {
-                        geometry: graphic,
-                        distance: 1,
-                        unit: "feet",
-                        spatialRelationship: "intersects",
-                        outFields: ["*"],
-                        returnGeometry: false
-                    };
-
-                    fixesLyr.queryFeatures(query)
-                        .then((results) => {
-                            let fix_id = "";
-                            if (results.features.length > 0) {
-                                fix_id = results.features[0].attributes.FIX_ID;
-                            }
-                            let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], 0, fix_id];
-                            
-                            createTableRow(point);
-                            
-                            multipointVertices.push([point[0], point[1], point[2]]);
-
-                            drawPath(multipointVertices);
+                    map.ground.queryElevation(graphic)
+                        .then((elevation) => {
+                            let query = {
+                                geometry: graphic,
+                                distance: 1,
+                                units: "feet",
+                                spatialRelationship: "intersects",
+                                outFields: ["*"],
+                                returnGeometry: false
+                            };
+            
+                            fixesLyr.queryFeatures(query)
+                                .then((results) => {
+                                    let fix_id = "";
+                                    if (results.features.length > 0) {
+                                        fix_id = results.features[0].attributes.FIX_ID;
+                                    }
+                                    let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], elevation.geometry.z, fix_id];
+            
+                                    createTableRow(point);
+                    
+                                    multipointVertices.push([point[0], point[1], point[2]]);
+            
+                                    drawPath(multipointVertices);
+                                });
                         });
 
                     if (multipointVertices.length > 1) {
