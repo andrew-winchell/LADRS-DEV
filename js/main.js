@@ -713,7 +713,7 @@ require([
             selectedFeature,
             editor,
             multipointVertices = [],
-            userLineColor,
+            userLineColor;
 
         //#endregion
 
