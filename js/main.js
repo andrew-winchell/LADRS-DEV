@@ -505,65 +505,10 @@ require([
         });
 
         //#endregion
-    
-        //#region Elevation Profile
 
         const elevationProfile = elevationProfileModule.createElevationProfile(mapView, "elevation-profile");
 
         const elevationProfile3D = elevationProfileModule.createElevationProfile(sceneView, "elevation-profile3d");
-
-        /*const elevationProfile = new ElevationProfile({
-            view: mapView,
-            profiles: [
-                {
-                    type: "ground"
-                },
-                {
-                    type: "input",
-                    title: "Flight Plan"
-                }
-            ],
-            visibleElements: {
-                legend: false,
-                clearButton: false,
-                settingsButton: false,
-                sketchButton: false,
-                selectButton: false,
-                uniformChartScalingToggle: false
-            },
-            container: "elevation-profile",
-            unit: "nautical-miles"
-        });
-
-        elevationProfile.viewModel.effectiveUnits.elevation = "feet";
-
-        const elevationProfile3D = new ElevationProfile({
-            view: sceneView,
-            profiles: [
-                {
-                    type: "ground"
-                },
-                {
-                    type: "input",
-                    title: "Flight Plan"
-                }
-            ],
-            visibleElements: {
-                legend: false,
-                clearButton: false,
-                settingsButton: false,
-                sketchButton: false,
-                selectButton: false,
-                uniformChartScalingToggle: false
-            },
-            container: "elevation-profile3d",
-            unit: "nautical-miles"
-        });
-
-        elevationProfile3D.viewModel.effectiveUnits.elevation = "feet";
-        */
-
-        //#endregion
 
         //#region Pointer Hover X/Y/Z Coordinates
 
@@ -791,8 +736,6 @@ require([
                         }
                     );
 
-                    console.log(existingRoutesLyr.renderer);
-
                     // Create a 0.6nm protection buffer around the selected route
                     const buffer = geometryEngine.buffer(geom, 0.3, "nautical-miles");
                     routeBuffer.add(
@@ -814,8 +757,6 @@ require([
                 } else {
                     // Remove the Unique Renderer Info for the deselected OID
                     existingRoutesLyr.renderer.removeUniqueValueInfo(objectId);
-
-                    console.log(existingRoutesLyr.renderer);
 
                     // Find the graphic for the route that was deslected and remove the corresponding buffer
                     let removeGraphic = routeBuffer.graphics.find((g) => {
