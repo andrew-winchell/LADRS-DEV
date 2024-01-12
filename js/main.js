@@ -562,35 +562,22 @@ require([
 
         //#region Pointer Hover X/Y/Z Coordinates
 
-        /*mapView.when(() => {
-            elevationLayer = new ElevationLayer({
+        
+        mapView.when(() => {
+            const elevation = new ElevationLayer({
                 url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
             });
-            return elevationLayer.load();
-        }).then(() => {
-            elevationLayer.createElevationSampler(mapView.extent)
-                .then((sampler) => {
-                    elevationSampler = sampler;
-
-                    mapView.on("pointer-move", (move) => {
-                        let mapPt = mapView.toMap(move);
-                        let coordinates = elevationSampler.queryElevation(mapPt)
-                        $("#pointer-coords").html("Lat: " + coordinates.latitude + "  Long: " + coordinates.longitude + "  Elev: " + (coordinates.z * 3.2808399) + " ft");
-                    });
-                });
-        });*/
-
-        mapView.when(() => {
-            map.ground.createElevationSampler(mapView.extent)
+            return elevation.load();
+        }).then((elevation) => {
+            elevation.createElevationSampler(mapView.extent)
                 .then((sampler) => {
                     mapView.on("pointer-move", (move) => {
                         let mapPt = mapView.toMap(move);
                         let coordinates = sampler.queryElevation(mapPt)
-                        console.log(coordinates);
                         $("#pointer-coords").html("Lat: " + coordinates.latitude + "  Long: " + coordinates.longitude + "  Elev: " + (coordinates.z * 3.2808399) + " ft");
-                    })
-                })
-            })
+                    });
+                });
+        });
 
         //#endregion
 
