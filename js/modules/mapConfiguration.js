@@ -1,7 +1,10 @@
 define([
     "esri/views/MapView",
-    "esri/views/SceneView"
-], (MapView, SceneView) => {
+    "esri/views/SceneView",
+    "js/modules/layers.js"
+], (MapView, SceneView, layersModule) => {
+
+    const map = layersModule.map;
 
     const mapView = new MapView({
         map: map,

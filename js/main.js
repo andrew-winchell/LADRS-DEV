@@ -33,8 +33,10 @@ require([
         geometryEngine, ElevationProfile, reactiveUtils, geodesicUtils, Basemap, BufferParameters, geometryService
     ) => {
 
+        // User Authentication Module
         userAuthentication.authenticateUser();
 
+        // Layers Module
         const map = layersModule.map;
 
         const fixesLyr = layersModule.layers.fixesLyr;
@@ -50,6 +52,7 @@ require([
         const pointGraphicsLyr = layersModule.graphicsLayers.pointGraphicsLyr;
         const routeBuffer = layersModule.graphicsLayers.routeBuffer;
 
+        // Map Configuration Module
         const mapView = mapConfiguration.mapView;
         const sceneView = mapConfiguration.sceneView;
         const activeView = mapConfiguration.activeView;
