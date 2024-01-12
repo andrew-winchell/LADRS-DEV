@@ -587,7 +587,7 @@ require([
                         let mapPt = mapView.toMap(move);
                         let coordinates = sampler.queryElevation(mapPt)
                         console.log(coordinates);
-                        $("#pointer-coords").html("Lat: " + coordinates.geometry.latitude + "  Long: " + coordinates.geometry.longitude + "  Elev: " + (coordinates.geometry.z * 3.2808399) + " ft");
+                        $("#pointer-coords").html("Lat: " + coordinates.latitude + "  Long: " + coordinates.longitude + "  Elev: " + (coordinates.z * 3.2808399) + " ft");
                     })
                 })
             })
