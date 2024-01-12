@@ -55,7 +55,7 @@ require([
         // Map Configuration Module
         const mapView = mapConfiguration.mapView;
         const sceneView = mapConfiguration.sceneView;
-        const activeView = mapConfiguration.activeView;
+        let activeView = mapConfiguration.activeView;
         const container = mapConfiguration.container;
 
         /*const mapView = new MapView({
