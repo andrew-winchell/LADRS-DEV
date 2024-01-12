@@ -581,7 +581,7 @@ require([
         });*/
 
         mapView.when(() => {
-            map.ground.createElevationSampler(mapView.extent, { demResolution: "finest-contiguous"})
+            map.ground.createElevationSampler(mapView.extent)
                 .then((sampler) => {
                     mapView.on("pointer-move", (move) => {
                         let mapPt = mapView.toMap(move);
