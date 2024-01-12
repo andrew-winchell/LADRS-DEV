@@ -512,10 +512,7 @@ require([
             view: mapView,
             profiles: [
                 {
-                    type: "ground",
-                    source: new ElevationLayer({
-                        url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
-                    })
+                    type: "ground"
                 },
                 {
                     type: "input",
@@ -540,10 +537,7 @@ require([
             view: sceneView,
             profiles: [
                 {
-                    type: "ground",
-                    source: new ElevationLayer({
-                        url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
-                    })
+                    type: "ground"
                 },
                 {
                     type: "input",
