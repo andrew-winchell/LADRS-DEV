@@ -14,8 +14,8 @@ define([
     });
 
     userAuthenticationModule.authenticateUser = () => {
-        let credential = esriId.getCredential(info.portalUrl + "/sharing");
-        console.log(credential)
+        let credential = esriId.getCredential(info.portalUrl + "/sharing")
+        
         esriId.registerOAuthInfos([info]);
         esriId.checkSignInStatus(info.portalUrl + "/sharing")
             .then(() => {
