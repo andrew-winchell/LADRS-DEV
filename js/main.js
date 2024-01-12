@@ -2,6 +2,7 @@ require([
     "js/modules/userAuthentication.js",
     "js/modules/layers.js",
     "js/modules/mapConfiguration.js",
+    "js/modules/elevationProfile.js",
     "esri/Graphic",
     "esri/smartMapping/statistics/uniqueValues",
     "esri/layers/ElevationLayer",
@@ -19,16 +20,15 @@ require([
     "esri/geometry/Polyline",
     "esri/geometry/Point",
     "esri/geometry/geometryEngine",
-    "esri/widgets/ElevationProfile",
     "esri/core/reactiveUtils",
     "esri/geometry/support/geodesicUtils",
     "esri/Basemap",
     "esri/rest/support/BufferParameters",
     "esri/rest/geometryService"
 ], (
-        userAuthentication, layersModule, mapConfiguration, Graphic, uniqueValues, ElevationLayer, Draw, LayerList, Sketch, SketchViewModel, Search,
+        userAuthentication, layersModule, mapConfiguration, elevationProfileModule, Graphic, uniqueValues, ElevationLayer, Draw, LayerList, Sketch, SketchViewModel, Search,
         BasemapGallery, Expand, Editor, webMercatorUtils, Compass, Multipoint, Polyline, Point,
-        geometryEngine, ElevationProfile, reactiveUtils, geodesicUtils, Basemap, BufferParameters, geometryService
+        geometryEngine, reactiveUtils, geodesicUtils, Basemap, BufferParameters, geometryService
     ) => {
 
         // User Authentication Module
@@ -508,7 +508,11 @@ require([
     
         //#region Elevation Profile
 
-        const elevationProfile = new ElevationProfile({
+        const elevationProfile = elevationProfileModule.createElevationProfile(mapView, "elevation-profile");
+
+        const elevationProfile3D = elevationProfileModule.createElevationProfile(sceneView, "elevation-profile3d");
+
+        /*const elevationProfile = new ElevationProfile({
             view: mapView,
             profiles: [
                 {
@@ -557,6 +561,7 @@ require([
         });
 
         elevationProfile3D.viewModel.effectiveUnits.elevation = "feet";
+        */
 
         //#endregion
 
