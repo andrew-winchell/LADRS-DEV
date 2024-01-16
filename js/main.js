@@ -59,7 +59,7 @@ require([
         // Elevation Profile Module
         const elevationProfile = elevationProfileModule.createElevationProfile(mapView, "elevation-profile");
         const elevationProfile3D = elevationProfileModule.createElevationProfile(sceneView, "elevation-profile3d");
-        
+
         //#region Layer Filters
 
         let routeSelection = document.createElement("calcite-combobox");
@@ -523,7 +523,9 @@ require([
                     mapView.on("pointer-move", (move) => {
                         let mapPt = mapView.toMap(move);
                         let coordinates = sampler.queryElevation(mapPt)
-                        $("#pointer-coords").html("Lat: " + coordinates.latitude + "  Long: " + coordinates.longitude + "  Elev: " + (coordinates.z * 3.2808399) + " ft");
+                        $("#pointer-coords").html("Lat: " + coordinates.latitude + "  Long: " + coordinates.longitude);
+                        // Bug where pointer elevation does not match elevation profile. Hide elevation until bug is resolved.
+                        // $("#pointer-coords").html("Lat: " + coordinates.latitude + "  Long: " + coordinates.longitude + "  Elev: " + (coordinates.z * 3.2808399) + " ft");
                     });
                 });
         });
