@@ -1038,7 +1038,7 @@ require([
             }
 
             const edits = {
-                addFeatures: airway
+                addFeatures: [airway]
             }
 
             uamLyr.applyEdits(edits).then((results) => {
