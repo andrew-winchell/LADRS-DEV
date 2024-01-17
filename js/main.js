@@ -1031,8 +1031,9 @@ require([
 
         $("#route-save").on("click", () => {
 
-            //routing.saveNewRoute(routePoints);
+            routing.saveNewRoute(routePoints);
 
+            /*
             // Get the user entered values for the route attributes
             let rName = $("#route-name")[0].value;
             let rArrival = $("#route-arr")[0].value;
@@ -1126,6 +1127,7 @@ require([
 
                     routeBuffer.removeAll();
                 });
+            */
         });
 
         $("#cancel-vertices").on("click", () => {
