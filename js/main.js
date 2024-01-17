@@ -1025,6 +1025,31 @@ require([
             $("#save")[0].disabled = false;
             $("#edit-vertices")[0].disabled = true;
             $("#cancel-vertices")[0].disabled = true;
+
+            let multipoint = new Multipoint({
+                points: routePoints.map(points => points.slice(0,3)),
+                spatialReference: mapView.spatialReference
+            })
+
+            let multipointGraphic = new Graphic({
+                geometry: multipoint,
+                attributes: {
+                    "NAME": "Test Route",
+                    "DEP_FAC": "Test Dep",
+                    "ARR_FAC": "Test Arr",
+                    "COLOR": userLineColor,
+                    "FIX": routePoints.map(points => points.slice(3,1))
+                }
+            });
+            const edits = {
+                addFeatures: [multipointGraphic]
+            }
+            existingRoutesLyr.applyEdits(edits)
+                .then((results) => {
+                    console.log(results);
+                }).catch((error) => {
+                    console.error(error);
+                })
         });
 
         // Open Save Route modal to enter attributes and push route to layer
