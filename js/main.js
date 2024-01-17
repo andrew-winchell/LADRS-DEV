@@ -1020,33 +1020,6 @@ require([
         }
 
         $("#complete-route").on("click", (e) => {
-            // Test multipoint feature edits
-
-            let airway = {
-                "type": "Feature",
-                "geometry": {
-                    "type": "MultiPoint",
-                    "coordinates": routePoints.map(points => points.slice(0,3)),
-                    "spatialReference": mapView.spatialReference
-                },
-                "properties": {
-                    "color": userLineColor,
-                    "pointSeq": routePoints.map(points => points.slice(4,1)),
-                    "fixes": routePoints.map(points => points.slice(3,1)),
-                    "name": "Route Name"
-                }
-            }
-
-            const edits = {
-                addFeatures: [airway]
-            }
-
-            uamLyr.applyEdits(edits).then((results) => {
-                console.log(results)
-            }).catch((error) => {
-                console.error(error);
-            })
-
             e.currentTarget.disabled = true;
             pointSketchViewModel.complete();
             $("#save")[0].disabled = false;
