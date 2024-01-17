@@ -662,7 +662,8 @@ require([
             editor,
             multipointVertices = [],
             userLineColor,
-            routePoints = [];
+            routePoints = [],
+            point_seq = 10;
 
         //#endregion
 
@@ -862,17 +863,13 @@ require([
                                 if (results.features.length > 0) {
                                     fix_id = results.features[0].attributes.FIX_ID;
                                 }
-                                let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], elevation.geometry.z, fix_id];
+                                let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], elevation.geometry.z, fix_id, point_seq];
+                                point_seq +=10;
 
                                 routePoints.push([point[0], point[1], point[2], point[3]])
         
                                 routing.nextTableRow(point);
                                 routing.drawPrelimPath(routePoints.map(points => points.slice(0,3)), userLineColor, elevationProfile);
-                
-                                //multipointVertices.push([point[0], point[1], point[2]]);
-                                //routePoints.push([point[0], point[1], point[2], point[3]]);
-        
-                                //drawPath(multipointVertices);
                             });
                     });
 
@@ -903,17 +900,13 @@ require([
                                     if (results.features.length > 0) {
                                         fix_id = results.features[0].attributes.FIX_ID;
                                     }
-                                    let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], elevation.geometry.z, fix_id];
+                                    let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], elevation.geometry.z, fix_id, point_seq];
+                                    point_seq +=10;
 
-                                    routePoints.push([point[0], point[1], point[2], point[3]]);
+                                    routePoints.push([point[0], point[1], point[2], point[3], point[4]]);
             
                                     routing.nextTableRow(point);
                                     routing.drawPrelimPath(routePoints.map(points => points.slice(0,-1)), userLineColor, elevationProfile);
-                    
-                                    //multipointVertices.push([point[0], point[1], point[2]]);
-                                    //routePoints.push([point[0], point[1], point[2], point[3]]);
-            
-                                    //drawPath(multipointVertices);
                                 });
                         });
 
@@ -1003,33 +996,6 @@ require([
             elevationProfile.input = graphic;
         });
 
-        function createTableRow (point) {
-            console.log(point);
-            let vertice = [[point[0], point[1], point[2]]];
-            let multipoint = new Multipoint({
-                points: vertice,
-                spatialReference: mapView.spatialReference
-            });
-
-            let mapPt = multipoint.getPoint(0);
-
-            let nextRow = $("#waypoint-table tbody")[0].insertRow(-1);
-            let nextVert = nextRow.insertCell(0);
-            let nextX = nextRow.insertCell(1);
-            let nextY = nextRow.insertCell(2);
-            let nextZ = nextRow.insertCell(3);
-            let nextFix = nextRow.insertCell(4);
-
-            nextVert.innerHTML = nextRow.rowIndex;
-            nextX.innerHTML = mapPt.longitude.toFixed(6);
-            nextX.setAttribute("contentEditable", "true");
-            nextY.innerHTML = mapPt.latitude.toFixed(6);
-            nextY.setAttribute("contentEditable", "true");
-            nextZ.innerHTML = (mapPt.z * 3.281).toFixed(0);
-            nextZ.setAttribute("contentEditable", "true");
-            nextFix.innerHTML = point[3];
-        }
-
         function drawPath (vertices) {
             mapView.graphics.removeAll();
 
@@ -1054,6 +1020,33 @@ require([
         }
 
         $("#complete-route").on("click", (e) => {
+            // Test multipoint feature edits
+
+            let airway = {
+                "type": "Feature",
+                "geometry": {
+                    "type": "MultiPoint",
+                    "coordinates": routePoints.map(points => points.slice(0,3)),
+                    "spatialReference": mapView.spatialReference
+                },
+                "properties": {
+                    "color": userLineColor,
+                    "pointSeq": routePoints.map(points => points.slice(4,1)),
+                    "fixes": routePoints.map(points => points.slice(3,1)),
+                    "name": "Route Name"
+                }
+            }
+
+            const edits = {
+                addFeatures: airway
+            }
+
+            uamLyr.applyEdits(edits).then((results) => {
+                console.log(results)
+            }).catch((error) => {
+                console.error(error);
+            })
+
             e.currentTarget.disabled = true;
             pointSketchViewModel.complete();
             $("#save")[0].disabled = false;
