@@ -1,8 +1,13 @@
 define([
-    "esri/geometry/Point"
-], (Point) => {
+    "js/modules/mapConfiguration.js",
+    "esri/geometry/Point",
+    "esri/geometry/Polyline",
+    "esri/Graphic"
+], (mapConfiguration, Point, Polyline, Graphic) => {
 
-    function nextTableRow(vertice, mapView) {
+    const mapView = mapConfiguration.mapView;
+
+    function nextTableRow(vertice) {
         let point = new Point({
             x: vertice[0],
             y: vertice[1],
@@ -28,8 +33,32 @@ define([
         nextZ.setAttribute("contentEditable", "true");
     }
 
+    function drawPrelimPath(points, lineColor, elevationProfile) {
+        mapView.graphics.removeAll();
+
+        let polyline = new Polyline({
+            hasZ: true,
+            spatialReference: mapView.spatialReference,
+            paths: points
+        });
+
+        let graphic = new Graphic({
+            geometry: polyline,
+            symbol: {
+                type: "simple-line",
+                color: lineColor,
+                width: "3",
+                style: "short-dash"
+            }
+        });
+
+        mapView.graphics.add(graphic);
+        elevationProfile.input = graphic;
+    }
+
 
     return {
-        nextTableRow: nextTableRow
+        nextTableRow: nextTableRow,
+        drawPrelimPath: drawPrelimPath
     }
 })
