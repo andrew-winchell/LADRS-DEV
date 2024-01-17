@@ -70,7 +70,7 @@ define([
         elevationProfile.input = graphic;
     }
 
-    function saveNewRoute(points) {
+    function saveNewRoute(points, lineColor) {
         // Create a new multipoint geometry using the X/Y/Z from the points array
         let multipoint = new Multipoint({
             points: points.map(point => point.slice(0,3)),
