@@ -3,6 +3,7 @@ require([
     "js/modules/layers.js",
     "js/modules/mapConfiguration.js",
     "js/modules/elevationProfile.js",
+    "js/modules/routing.js",
     "esri/Graphic",
     "esri/smartMapping/statistics/uniqueValues",
     "esri/layers/ElevationLayer",
@@ -26,7 +27,7 @@ require([
     "esri/rest/support/BufferParameters",
     "esri/rest/geometryService"
 ], (
-        userAuthentication, layersModule, mapConfiguration, elevationProfileModule, Graphic, uniqueValues, ElevationLayer, Draw, LayerList, Sketch, SketchViewModel, Search,
+        userAuthentication, layersModule, mapConfiguration, elevationProfileModule, routing, Graphic, uniqueValues, ElevationLayer, Draw, LayerList, Sketch, SketchViewModel, Search,
         BasemapGallery, Expand, Editor, webMercatorUtils, Compass, Multipoint, Polyline, Point,
         geometryEngine, reactiveUtils, geodesicUtils, Basemap, BufferParameters, geometryService
     ) => {
@@ -660,7 +661,8 @@ require([
             selectedFeature,
             editor,
             multipointVertices = [],
-            userLineColor;
+            userLineColor,
+            routePoints = [];
 
         //#endregion
 
@@ -864,9 +866,10 @@ require([
         
                                 createTableRow(point);
                 
-                                multipointVertices.push([point[0], point[1], point[2]]);
+                                //multipointVertices.push([point[0], point[1], point[2]]);
+                                //routePoints.push([point[0], point[1], point[2], point[3]]);
         
-                                drawPath(multipointVertices);
+                                //drawPath(multipointVertices);
                             });
                     });
 
@@ -901,9 +904,10 @@ require([
             
                                     createTableRow(point);
                     
-                                    multipointVertices.push([point[0], point[1], point[2]]);
+                                    //multipointVertices.push([point[0], point[1], point[2]]);
+                                    //routePoints.push([point[0], point[1], point[2], point[3]]);
             
-                                    drawPath(multipointVertices);
+                                    //drawPath(multipointVertices);
                                 });
                         });
 
@@ -994,6 +998,7 @@ require([
         });
 
         function createTableRow (point) {
+            console.log(point);
             let vertice = [[point[0], point[1], point[2]]];
             let multipoint = new Multipoint({
                 points: vertice,
