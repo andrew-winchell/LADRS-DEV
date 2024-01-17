@@ -1044,7 +1044,7 @@ require([
             const edits = {
                 addFeatures: [multipointGraphic]
             }
-            existingRoutesLyr.applyEdits(edits)
+            uamLyr.applyEdits(edits)
                 .then((results) => {
                     console.log(results);
                 }).catch((error) => {
