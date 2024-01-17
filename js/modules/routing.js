@@ -1,11 +1,14 @@
 define([
     "js/modules/mapConfiguration.js",
+    "js/modules/layers.js",
     "esri/geometry/Point",
     "esri/geometry/Polyline",
+    "esri/geometry/Multipoint",
     "esri/Graphic"
-], (mapConfiguration, Point, Polyline, Graphic) => {
+], (mapConfiguration, layerConfiguration, Point, Polyline, Multipoint, Graphic) => {
 
     const mapView = mapConfiguration.mapView;
+    const aamLyr = layerConfiguration.aamLyr;
 
     function nextTableRow(vertice) {
         let point = new Point({
@@ -56,9 +59,37 @@ define([
         elevationProfile.input = graphic;
     }
 
+    function saveNewRoute(points) {
+        let multipoint = new Multipoint({
+            points: points.map(point => point.slice(0,3)),
+            spatialReference: mapView.spatialReference
+        });
+
+        let multipointGraphic = new Graphic({
+            geometry: multipoint,
+            attributes: {
+                "NAME": ,
+                "DEP_FAC": ,
+                "ARR_FAC": , 
+                "COLOR": lineColor,
+                "FIX": points.map(point => point[3]).join(",")
+            }
+        });
+
+        const edits = {
+            addFeatures: [multipointGraphic]
+        };
+
+        aamLyr.applyEdits(edits)
+            .then((results) => {
+                console.log(results);
+            });
+    }
+
 
     return {
         nextTableRow: nextTableRow,
-        drawPrelimPath: drawPrelimPath
+        drawPrelimPath: drawPrelimPath,
+        saveNewRoute: saveNewRoute
     }
 })

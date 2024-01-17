@@ -662,8 +662,7 @@ require([
             editor,
             multipointVertices = [],
             userLineColor,
-            routePoints = [],
-            point_seq = 10;
+            routePoints = [];
 
         //#endregion
 
@@ -863,8 +862,7 @@ require([
                                 if (results.features.length > 0) {
                                     fix_id = results.features[0].attributes.FIX_ID;
                                 }
-                                let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], elevation.geometry.z, fix_id, point_seq];
-                                point_seq += 10;
+                                let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], elevation.geometry.z, fix_id];
 
                                 routePoints.push(point)
         
@@ -900,9 +898,8 @@ require([
                                     if (results.features.length > 0) {
                                         fix_id = results.features[0].attributes.FIX_ID;
                                     }
-                                    let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], elevation.geometry.z, fix_id, point_seq];
-                                    point_seq += 10;
-
+                                    let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], elevation.geometry.z, fix_id];
+                                    
                                     routePoints.push(point);
             
                                     routing.nextTableRow(point);
@@ -1025,31 +1022,6 @@ require([
             $("#save")[0].disabled = false;
             $("#edit-vertices")[0].disabled = true;
             $("#cancel-vertices")[0].disabled = true;
-
-            let multipoint = new Multipoint({
-                points: routePoints.map(points => points.slice(0,3)),
-                spatialReference: mapView.spatialReference
-            })
-            console.log(routePoints.map(points => points[3]).join(","));
-            let multipointGraphic = new Graphic({
-                geometry: multipoint,
-                attributes: {
-                    "NAME": "Test Route",
-                    "DEP_FAC": "Test Dep",
-                    "ARR_FAC": "Test Arr",
-                    "COLOR": userLineColor,
-                    "FIX": routePoints.join(",")
-                }
-            });
-            const edits = {
-                addFeatures: [multipointGraphic]
-            }
-            uamLyr.applyEdits(edits)
-                .then((results) => {
-                    console.log(results);
-                }).catch((error) => {
-                    console.error(error);
-                })
         });
 
         // Open Save Route modal to enter attributes and push route to layer
@@ -1058,6 +1030,8 @@ require([
         });
 
         $("#route-save").on("click", () => {
+
+            //routing.saveNewRoute(routePoints);
 
             // Get the user entered values for the route attributes
             let rName = $("#route-name")[0].value;
