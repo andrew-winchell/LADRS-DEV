@@ -10,8 +10,6 @@ define([
             spatialReference: mapView.spatialReference
         });
 
-        let mapPt = point.getPoint(0);
-
         let nextRow = $("#waypoint-table tbody")[0].insertRow(-1);
         let nextPoint = nextRow.insertCell(0);
         let nextX = nextRow.insertCell(1);
