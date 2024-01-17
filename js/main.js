@@ -1030,7 +1030,7 @@ require([
                 points: routePoints.map(points => points.slice(0,3)),
                 spatialReference: mapView.spatialReference
             })
-            console.log(routePoints.join(","));
+            console.log(routePoints.map(points => points[3]).join(","));
             let multipointGraphic = new Graphic({
                 geometry: multipoint,
                 attributes: {
