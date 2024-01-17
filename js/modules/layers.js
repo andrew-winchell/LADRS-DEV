@@ -477,7 +477,8 @@ define([
             classAirspaceLyr,
             vertiportsLyr,
             existingRoutesLyr,
-            routeBuffer
+            routeBuffer,
+            aamLyr
         ]
     });
 
