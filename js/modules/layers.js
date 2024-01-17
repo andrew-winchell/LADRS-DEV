@@ -491,7 +491,7 @@ define([
             obstaclesLyr: obstaclesLyr,
             vertiportsLyr: vertiportsLyr,
             existingRoutesLyr: existingRoutesLyr,
-            uamLyr: uamLyr
+            aamLyr: aamLyr
         },
         graphicsLayers: {
             lineGraphicsLyr: lineGraphicsLyr,
