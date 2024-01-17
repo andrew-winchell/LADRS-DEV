@@ -1031,7 +1031,7 @@ require([
 
         $("#route-save").on("click", () => {
 
-            routing.saveNewRoute(routePoints);
+            routing.saveNewRoute(routePoints, userLineColor);
 
             /*
             // Get the user entered values for the route attributes
