@@ -910,7 +910,7 @@ require([
                                 });
                         });
 
-                    if (multipointVertices.length > 1) {
+                    if (routePoints.length > 1) {
                         $("#complete-route")[0].disabled = false;
                     }
 
