@@ -1,14 +1,12 @@
 define([
-    ""
-], () => {
+    "esri/geometry/Point"
+], (Point) => {
 
-    function nextTableRow(point, mapView) {
-        console.log(point);
-
-        let vertice = [[point[0], point[1], point[2]]];
-
-        let point = new Multipoint({
-            points: vertice,
+    function nextTableRow(vertice, mapView) {
+        let point = new Point({
+            x: vertice[0],
+            y: vertice[1],
+            z: vertice[2],
             spatialReference: mapView.spatialReference
         });
 
@@ -22,10 +20,10 @@ define([
         let nextFix = nextRow.insertCell(4);
 
         nextPoint.innerHTML = nextRow.rowIndex;
-        nextX.innerHTML = point[0].toFixed(6);
-        nextY.innerHTML = point[1].toFixed(6);
-        nextZ.innerHTML = point[2];
-        nextFix.innerHTML = point[3];
+        nextX.innerHTML = point.longitude.toFixed(6);
+        nextY.innerHTML = point.latitude.toFixed(6);
+        nextZ.innerHTML = (point.z * 3.281).toFixed(0);
+        nextFix.innerHTML = vertice[3];
 
         nextX.setAttribute("contentEditable", "true");
         nextY.setAttribute("contentEditable", "true");

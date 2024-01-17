@@ -902,7 +902,8 @@ require([
                                     }
                                     let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], elevation.geometry.z, fix_id];
             
-                                    createTableRow(point);
+                                    //createTableRow(point);
+                                    routing.nextTableRow(point, mapView);
                     
                                     //multipointVertices.push([point[0], point[1], point[2]]);
                                     //routePoints.push([point[0], point[1], point[2], point[3]]);
