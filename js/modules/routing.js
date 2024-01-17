@@ -95,6 +95,7 @@ define([
             addFeatures: [multipointGraphic]
         };
 
+        console.log(aamLyr);
         // Send the edits to the server and then update the view
         aamLyr.applyEdits(edits)
             .then((results) => {
