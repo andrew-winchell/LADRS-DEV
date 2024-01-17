@@ -447,7 +447,7 @@ define([
     });
 
     const uamLyr = new FeatureLayer({
-        url: "https://services3.arcgis.com/rKjecbIat1XHvd9J/arcgis/rest/services/LADRS_Routes/FeatureServer",
+        url: "https://services3.arcgis.com/rKjecbIat1XHvd9J/arcgis/rest/services/AAM_Routes/FeatureServer",
         title: "UAM Routes"
     });
 
