@@ -1026,8 +1026,13 @@ require([
             $("#edit-vertices")[0].disabled = true;
             $("#cancel-vertices")[0].disabled = true;
 
+            let multipoint = new Multipoint({
+                points: routePoints.map(points => points.slice(0,3)),
+                spatialReference: mapView.spatialReference
+            })
+
             let multipointGraphic = new Graphic({
-                geometry: routePoints.map(points => points.slice(0,3)),
+                geometry: multipoint,
                 attributes: {
                     "NAME": "Test Route",
                     "DEP_FAC": "Test Dep",
