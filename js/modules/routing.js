@@ -9,7 +9,7 @@ define([
 
     // Pull variables from other modules as needed
     const mapView = mapConfiguration.mapView;
-    const aamLyr = layerConfiguration.aamLyr;
+    const aamLyr = layerConfiguration.layers.aamLyr;
 
     function nextTableRow(vertice) {
         // Create a point object with the easting/northing to be able to grab the decimal lat/long
