@@ -864,9 +864,9 @@ require([
                                     fix_id = results.features[0].attributes.FIX_ID;
                                 }
                                 let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], elevation.geometry.z, fix_id, point_seq];
-                                point_seq +=10;
+                                point_seq += 10;
 
-                                routePoints.push([point[0], point[1], point[2], point[3]])
+                                routePoints.push(point)
         
                                 routing.nextTableRow(point);
                                 routing.drawPrelimPath(routePoints.map(points => points.slice(0,3)), userLineColor, elevationProfile);
@@ -901,9 +901,9 @@ require([
                                         fix_id = results.features[0].attributes.FIX_ID;
                                     }
                                     let point = [e.toolEventInfo.added[0][0], e.toolEventInfo.added[0][1], elevation.geometry.z, fix_id, point_seq];
-                                    point_seq +=10;
+                                    point_seq += 10;
 
-                                    routePoints.push([point[0], point[1], point[2], point[3], point[4]]);
+                                    routePoints.push(point);
             
                                     routing.nextTableRow(point);
                                     routing.drawPrelimPath(routePoints.map(points => points.slice(0,-1)), userLineColor, elevationProfile);
@@ -1030,14 +1030,15 @@ require([
                 points: routePoints.map(points => points.slice(0,3)),
                 spatialReference: mapView.spatialReference
             })
-
+            console.log(routePoints.join(","));
             let multipointGraphic = new Graphic({
                 geometry: multipoint,
                 attributes: {
                     "NAME": "Test Route",
                     "DEP_FAC": "Test Dep",
                     "ARR_FAC": "Test Arr",
-                    "COLOR": userLineColor
+                    "COLOR": userLineColor,
+                    "FIX": routePoints.join(",")
                 }
             });
             const edits = {
