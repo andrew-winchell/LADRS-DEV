@@ -1037,8 +1037,7 @@ require([
                     "NAME": "Test Route",
                     "DEP_FAC": "Test Dep",
                     "ARR_FAC": "Test Arr",
-                    "COLOR": userLineColor,
-                    "FIX": routePoints.map(points => points.slice(3,1))
+                    "COLOR": userLineColor
                 }
             });
             const edits = {
