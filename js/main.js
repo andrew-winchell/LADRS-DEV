@@ -45,7 +45,7 @@ require([
         const classAirspaceLyr = layersModule.layers.classAirspaceLyr;
         const obstaclesLyr = layersModule.layers.obstaclesLyr;
         const vertiportsLyr = layersModule.layers.vertiportsLyr;
-        const uamLyr = layersModule.layers.uamLyr;
+        const aamLyr = layersModule.layers.aamLyr;
 
         const lineGraphicsLyr = layersModule.graphicsLayers.lineGraphicsLyr;
         const pointGraphicsLyr = layersModule.graphicsLayers.pointGraphicsLyr;
