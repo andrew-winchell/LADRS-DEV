@@ -10,7 +10,7 @@ define([
 
     // Pull variables from other modules as needed
     const mapView = mapConfiguration.mapView;
-    const aamLyr = layerConfiguration.layers.uamLyr;
+    const uamLyr = layerConfiguration.layers.uamLyr;
 
     function nextTableRow(vertice) {
         // Create a point object with the easting/northing to be able to grab the decimal lat/long
@@ -96,9 +96,9 @@ define([
             addFeatures: [multipointGraphic]
         };
 
-        console.log(aamLyr);
+        console.log(uamLyr);
         // Send the edits to the server and then update the view
-        aamLyr.applyEdits(edits)
+        uamLyr.applyEdits(edits)
             .then((results) => {
                 let oid = results.addFeatureResults[0].objectId;
 
@@ -115,7 +115,7 @@ define([
 
                 // Create the expression that has the oid's wrapped in quotes and joined by a comma
                 let expression = "Program = 'Supernal' AND OBJECTID IN (" + selectedArr.map(oid => `'${oid}'`).join(",") + ")";
-                aamLyr.definitionExpression = expression;
+                uamLyr.definitionExpression = expression;
 
                 // Delete the current list of existing routes
                 $("#existing-routes").empty();
