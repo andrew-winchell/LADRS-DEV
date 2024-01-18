@@ -677,11 +677,14 @@ require([
                     outFields: ["*"]
                 };
 
-                existingRoutesLyr.queryFeatures(query)
+                aamLyr.queryFeatures(query)
                     .then((r) => {
                         for (let f of r.features) {
+                            let distance = geometryEngine.geodesicLength(f, "nautical-miles").toFixed(2);
+                            console.log(distance);
+
                             $("#existing-routes").append(
-                                "<calcite-list-item value='" + f.attributes.OBJECTID + "' label='" + f.attributes.route_name + "' description='Distance: " + parseFloat(f.attributes.route_distance).toFixed(2) + " nautical miles'></calcite-list-item>"
+                                "<calcite-list-item value='" + f.attributes.OBJECTID + "' label='" + f.attributes.NAME + "' description='Distance: " + distance + " nautical miles'></calcite-list-item>"
                             )
                         }
                         $("#existing-routes")[0].loading = false;
