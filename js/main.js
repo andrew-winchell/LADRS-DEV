@@ -674,7 +674,8 @@ require([
             mapView.when(() => {
                 const query = {
                     where: "program = 'Supernal'", // Modify where clause depending on the user program
-                    outFields: ["*"]
+                    outFields: ["*"],
+                    returnGeometry: true
                 };
 
                 aamLyr.queryFeatures(query)
