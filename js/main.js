@@ -674,7 +674,7 @@ require([
             mapView.when(() => {
                 const query = {
                     where: "program = 'Supernal'", // Modify where clause depending on the user program
-                    outFields: ["*"],
+                    outFields: ["OBJECTID", "NAME"],
                     returnGeometry: true
                 };
 
