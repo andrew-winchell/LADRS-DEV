@@ -446,9 +446,9 @@ define([
         definitionExpression: "1=0"
     });
 
-    const aamLyr = new FeatureLayer({
-        url: "https://services3.arcgis.com/rKjecbIat1XHvd9J/arcgis/rest/services/AAM_Routes/FeatureServer",
-        title: "AAM Routes"
+    const uamLyr = new FeatureLayer({
+        url: "https://services3.arcgis.com/rKjecbIat1XHvd9J/arcgis/rest/services/UAM_Routes/FeatureServer",
+        title: "UAM Routes"
     });
 
     const lineGraphicsLyr = new GraphicsLayer({
