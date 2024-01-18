@@ -61,6 +61,11 @@ require([
         const elevationProfile = elevationProfileModule.createElevationProfile(mapView, "elevation-profile");
         const elevationProfile3D = elevationProfileModule.createElevationProfile(sceneView, "elevation-profile3d");
 
+        // Populate Route List
+        mapView.when(() => {
+            routing.populateExistingRoutes();
+        });
+
         //#region Layer Filters
 
         let routeSelection = document.createElement("calcite-combobox");
@@ -668,48 +673,6 @@ require([
 
         //#region Populate List of Existing Routes
 
-        populateExistingRoutes();
-
-        function populateExistingRoutes () {
-            mapView.when(() => {
-                const query = {
-                    where: "program = 'Supernal'", // Modify where clause depending on the user program
-                    outFields: ["FID", "NAME"],
-                    hasZ: true,
-                    returnGeometry: true
-                };
-
-                aamLyr.queryFeatures(query)
-                    .then((results) => {
-                        for (let feature of results.features) {
-                            let points = feature.geometry.points;
-                            let line = new Polyline({
-                                paths: [points],
-                                hasZ: true,
-                                spatialReference: mapView.spatialReference
-                            });
-
-                            const graphic = new Graphic({
-                                geometry: line,
-                                symbol: {
-                                    type: "simple-line",
-                                    color: "black",
-                                    width: "3",
-                                    style: "short-dash"
-                                }
-                            });
-                            mapView.graphics.add(graphic);
-
-                            let distance = geometryEngine.geodesicLength(line, "nautical-miles").toFixed(2);
-
-                            $("#existing-routes").append(
-                                "<calcite-list-item value='" + feature.attributes.FID + "' label='" + feature.attributes.NAME + "' description='Distance: " + distance + " nautical miles'></calcite-list-item>"
-                            )
-                        }
-                        $("#existing-routes")[0].loading = false;
-                    });
-            });
-        }
 
         //#endregion
 

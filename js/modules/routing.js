@@ -125,6 +125,33 @@ define([
             });
     }
 
+    function populateExistingRoutes() {
+        const query = {
+            where: "PROGRAM = 'Supernal'",
+            outFields: ["FID", "NAME"],
+            hasZ: true,
+            returnGeometry: true
+        };
+
+        aamLyr.queryFeatures(query)
+            .then((results) => {
+                for (let feature of results.features) {
+                    let line = new Polyline({
+                        paths: [feature.geometry.points],
+                        hasZ: true,
+                        spatialReference: mapView.spatialReference
+                    });
+
+                    let distance = geometryEngine.geodesicLength(line, "nautical-miles").toFixed(2);
+
+                    $("#existing-routes").append(
+                        "<calcite-list-item value='" + feature.attributes.FID + "' label='" + feature.attributes.NAME + "' description='Distance: " + distance + " nautical miles'></calcite-list-item>"
+                    );
+                }
+                $("#existing-routes")[0].loading = false;
+            });
+    }
+
     function updateRenderer(objectId, routeSelected) {
         let lineColor, geom, routeBufferName;
     }
@@ -132,6 +159,7 @@ define([
     return {
         nextTableRow: nextTableRow,
         drawPrelimPath: drawPrelimPath,
-        saveNewRoute: saveNewRoute
+        saveNewRoute: saveNewRoute,
+        populateExistingRoutes: populateExistingRoutes
     }
 })
