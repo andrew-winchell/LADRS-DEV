@@ -680,15 +680,17 @@ require([
                 };
 
                 aamLyr.queryFeatures(query)
-                    .then((r) => {
-                        console.log(r)
-                        for (let f of r.features) {
-                            console.log(f)
-                            let distance = geometryEngine.geodesicLength(f.geometry, "nautical-miles").toFixed(2);
-                            console.log(distance);
+                    .then((results) => {
+                        for (let feature of results.features) {
+                            let points = feature.geometry.points;
+                            let line = new Polyline({
+                                paths: [points]
+                            });
 
+                            let distance = geometryEngine.geodesicLength(line, "nautical-miles");
+                            
                             $("#existing-routes").append(
-                                "<calcite-list-item value='" + f.attributes.FID + "' label='" + f.attributes.NAME + "' description='Distance: " + distance + " nautical miles'></calcite-list-item>"
+                                "<calcite-list-item value='" + feature.attributes.FID + "' label='" + feature.attributes.NAME + "' description='Distance: " + distance + " nautical miles'></calcite-list-item>"
                             )
                         }
                         $("#existing-routes")[0].loading = false;
