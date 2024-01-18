@@ -45,7 +45,7 @@ require([
         const classAirspaceLyr = layersModule.layers.classAirspaceLyr;
         const obstaclesLyr = layersModule.layers.obstaclesLyr;
         const vertiportsLyr = layersModule.layers.vertiportsLyr;
-        const aamLyr = layersModule.layers.aamLyr;
+        const uamLyr = layersModule.layers.uamLyr;
 
         const lineGraphicsLyr = layersModule.graphicsLayers.lineGraphicsLyr;
         const pointGraphicsLyr = layersModule.graphicsLayers.pointGraphicsLyr;
@@ -1144,7 +1144,7 @@ require([
 
         mapView.on("click", (e) => {
             const opts = {
-                include: aamLyr
+                include: uamLyr
             };
 
             mapView.hitTest(e, opts)
@@ -1158,7 +1158,7 @@ require([
 
         sceneView.on("click", (e) => {
             const opts = {
-                include: aamLyr
+                include: uamLyr
             };
 
             sceneView.hitTest(e, opts)
