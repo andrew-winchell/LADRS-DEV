@@ -674,7 +674,7 @@ require([
             mapView.when(() => {
                 const query = {
                     where: "program = 'Supernal'", // Modify where clause depending on the user program
-                    outFields: ["OBJECTID", "NAME"],
+                    outFields: ["FID", "NAME"],
                     returnGeometry: true
                 };
 
@@ -687,7 +687,7 @@ require([
                             console.log(distance);
 
                             $("#existing-routes").append(
-                                "<calcite-list-item value='" + f.attributes.OBJECTID + "' label='" + f.attributes.NAME + "' description='Distance: " + distance + " nautical miles'></calcite-list-item>"
+                                "<calcite-list-item value='" + f.attributes.FID + "' label='" + f.attributes.NAME + "' description='Distance: " + distance + " nautical miles'></calcite-list-item>"
                             )
                         }
                         $("#existing-routes")[0].loading = false;
