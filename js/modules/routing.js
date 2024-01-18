@@ -4,8 +4,9 @@ define([
     "esri/geometry/Point",
     "esri/geometry/Polyline",
     "esri/geometry/Multipoint",
-    "esri/Graphic"
-], (mapConfiguration, layerConfiguration, Point, Polyline, Multipoint, Graphic) => {
+    "esri/Graphic",
+    "esri/geometry/geometryEngine"
+], (mapConfiguration, layerConfiguration, Point, Polyline, Multipoint, Graphic, geometryEngine) => {
 
     // Pull variables from other modules as needed
     const mapView = mapConfiguration.mapView;
