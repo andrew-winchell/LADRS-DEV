@@ -684,7 +684,9 @@ require([
                         for (let feature of results.features) {
                             let points = feature.geometry.points;
                             let line = new Polyline({
-                                paths: [points]
+                                paths: [points],
+                                hasZ: true,
+                                spatialReference: mapView.spatialReference
                             });
 
                             const graphic = new Graphic({
