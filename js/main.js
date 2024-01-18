@@ -675,6 +675,7 @@ require([
                 const query = {
                     where: "program = 'Supernal'", // Modify where clause depending on the user program
                     outFields: ["FID", "NAME"],
+                    hasZ: true,
                     returnGeometry: true
                 };
 
@@ -683,7 +684,7 @@ require([
                         console.log(r)
                         for (let f of r.features) {
                             console.log(f)
-                            let distance = geometryEngine.geodesicLength(f, "nautical-miles").toFixed(2);
+                            let distance = geometryEngine.geodesicLength(f.geometry, "nautical-miles").toFixed(2);
                             console.log(distance);
 
                             $("#existing-routes").append(
