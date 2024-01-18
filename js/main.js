@@ -687,8 +687,19 @@ require([
                                 paths: [points]
                             });
 
-                            let distance = geometryEngine.geodesicLength(line, "nautical-miles");
-                            
+                            const graphic = new Graphic({
+                                geometry: line,
+                                symbol: {
+                                    type: "simple-line",
+                                    color: userLineColor,
+                                    width: "3",
+                                    style: "short-dash"
+                                }
+                            });
+                            mapView.graphics.add(graphic);
+
+                            let distance = geometryEngine.geodesicLength(line, "nautical-miles").toFixed(2);
+
                             $("#existing-routes").append(
                                 "<calcite-list-item value='" + feature.attributes.FID + "' label='" + feature.attributes.NAME + "' description='Distance: " + distance + " nautical miles'></calcite-list-item>"
                             )
