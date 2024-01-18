@@ -691,7 +691,7 @@ require([
                                 geometry: line,
                                 symbol: {
                                     type: "simple-line",
-                                    color: userLineColor,
+                                    color: "black",
                                     width: "3",
                                     style: "short-dash"
                                 }
