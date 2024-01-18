@@ -478,7 +478,7 @@ define([
             vertiportsLyr,
             existingRoutesLyr,
             routeBuffer,
-            aamLyr
+            uamLyr
         ]
     });
 
