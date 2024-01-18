@@ -679,7 +679,9 @@ require([
 
                 aamLyr.queryFeatures(query)
                     .then((r) => {
+                        console.log(r)
                         for (let f of r.features) {
+                            console.log(f)
                             let distance = geometryEngine.geodesicLength(f, "nautical-miles").toFixed(2);
                             console.log(distance);
 
