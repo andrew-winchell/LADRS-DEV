@@ -1165,7 +1165,7 @@ require([
 
         mapView.on("click", (e) => {
             const opts = {
-                include: existingRoutesLyr
+                include: aamLyr
             };
 
             mapView.hitTest(e, opts)
@@ -1179,7 +1179,7 @@ require([
 
         sceneView.on("click", (e) => {
             const opts = {
-                include: existingRoutesLyr
+                include: aamLyr
             };
 
             sceneView.hitTest(e, opts)
