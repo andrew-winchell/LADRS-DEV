@@ -134,7 +134,7 @@ define([
             returnGeometry: true
         };
 
-        aamLyr.queryFeatures(query)
+        uamLyr.queryFeatures(query)
             .then((results) => {
                 for (let feature of results.features) {
                     let line = new Polyline({
